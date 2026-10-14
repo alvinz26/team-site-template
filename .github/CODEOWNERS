@@ -1,0 +1,13 @@
+# Code owned by the template's author (Tao, @alvinz26).
+# In a repository that turns on "Require review from Code Owners", any pull request that
+# touches these paths needs @alvinz26's approval. content/ is NOT listed, so club members
+# can update text, people, honours, news and images without waiting for review.
+
+/src/                @alvinz26
+/tests/              @alvinz26
+/.github/            @alvinz26
+/astro.config.mjs    @alvinz26
+/package.json        @alvinz26
+/package-lock.json   @alvinz26
+/tsconfig.json       @alvinz26
+/LICENSE             @alvinz26
