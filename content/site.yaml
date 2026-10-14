@@ -1,25 +1,30 @@
 # =============================================================
 #  Site settings — the whole site reads from this file.
 #  Field reference: docs/data-model.md   Guide (中文): docs/content-guide.md
-#  Everything here is FICTIONAL example data. Replace it with your own.
+#
+#  PREVIEW CONTENT: Durham branding with obvious placeholders (DECISIONS.md D28).
+#  Every name, number and result below is a placeholder, not real club data.
 # =============================================================
 
 # ---------- Basic info ----------
-name: Northvale University Ultimate Frisbee Club   # full name, shown on the home page and in the browser tab
-shortName: Northvale Ultimate                      # short name, shown in the navigation bar
-tagline: Fast feet, big hucks, better spirit.      # one line under the name on the home page
-org: Northvale University                          # optional — school / organisation you belong to
-founded: 2004                                      # optional — year founded (a number, no quotes)
+name: Durham University Ultimate Frisbee Club    # full name, shown on the home page and in the browser tab
+shortName: Durham Ultimate                       # short name, shown in the navigation bar
+tagline: Placeholder tagline — one short line about the club.
+org: Durham University                           # optional — school / organisation you belong to
+# founded: 2000                                  # optional — year founded (needed for "auto: seasons")
 description: >-
-  Northvale Ultimate is the university's frisbee club. We train three times a week,
-  welcome complete beginners, and send open, women's and mixed teams to student
-  competitions across the country.
+  Placeholder description. Replace this with two or three sentences about the club:
+  who you are, how often you train, and that beginners are welcome.
+
+# ---------- Site-wide notice (optional) ----------
+# A banner shown at the top of every page. Delete the line to remove it.
+notice: Preview — this is not the official Durham Ultimate website. All names, results and news are placeholders.
 
 # ---------- Brand ----------
 logo: images/brand/logo.svg       # optional — leave out to show the short name as text instead
 colors:
-  primary: "#0f5c6e"              # main colour (nav bar, headings). Keep the quotes!
-  accent: "#f4b942"               # highlight colour (buttons, links). Keep the quotes!
+  primary: "#3d1240"              # main colour (nav bar, headings). Keep the quotes!
+  accent: "#8a2f8a"               # highlight colour (buttons, links). Keep the quotes!
 
 # ---------- Contact ----------
 email: hello@example.com          # optional — shown on the Contact page
@@ -28,25 +33,21 @@ socials:                          # optional — icons in the footer and on the 
     url: https://example.com/instagram
   - platform: facebook
     url: https://example.com/facebook
-  - platform: youtube
-    url: https://example.com/youtube
-  - platform: whatsapp
-    url: https://example.com/whatsapp
+  - platform: tiktok
+    url: https://example.com/tiktok
 
 # ---------- Home page ----------
-hero:                             # optional — the big picture at the top of the home page
-  image: images/home/hero.svg
-  alt: Players stretching out for a disc on a sunny pitch   # describe the picture for screen readers
+# hero:                           # optional — the big picture at the top of the home page
+#   image: images/home/hero.jpg
+#   alt: Describe the picture for screen readers
 
-stats:                            # optional — the row of big numbers on the home page
+stats:                            # optional — the row of numbers under the top of the home page
   - label: Founded
-    value: "2004"
-  - label: Honours won
-    auto: honours                 # counted automatically from honours.yaml
-  - label: Seasons played
-    auto: seasons                 # counted automatically (see docs/data-model.md)
+    value: TBC
   - label: Members
-    value: 80+
+    value: TBC
+  - label: Teams
+    value: TBC
 
 # ---------- Optional modules ----------
 modules:
@@ -65,7 +66,7 @@ people:
 
 # ---------- Honours page ----------
 honours:
-  facets:                         # filters on the Honours page. Every team can choose its own.
+  facets:                         # filters on the Honours page
     - key: level
       label: Level
       options:
@@ -101,12 +102,12 @@ honours:
       label: Spirit Award
       emoji: "🕊️"
       rank: 4
-  aliases:                        # optional — other spellings of the same person, merged on the leaderboard
-    Joshua Carter:
-      - Josh Carter
+  # aliases:                      # optional — other spellings of the same person, merged on the leaderboard
+  #   Joshua Smith:
+  #     - Josh Smith
 
 # ---------- Interface text (optional) ----------
 # Leave this out to use the English defaults. Only list what you want to change.
-labels:
-  nav:
-    honours: Trophy Cabinet
+# labels:
+#   nav:
+#     news: Latest news

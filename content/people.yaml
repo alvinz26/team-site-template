@@ -3,98 +3,83 @@
 #  One block per person per season. Copy a block (from "- name" down) to add someone.
 #  `group` must be one of the keys in site.yaml → people.groups.
 #  The People page shows the newest season; older seasons are kept as history.
-#  Everyone below is FICTIONAL.
+#
+#  PREVIEW CONTENT: every name below is a placeholder (DECISIONS.md D28).
 # =============================================================
 
 # ---------- 2026/27 — Committee ----------
-- name: Maya Okafor
+- name: Committee Member 1
   role: President
   group: committee
   season: 2026/27
-  photo: images/people/maya-okafor.svg
-  bio: Fourth-year geography student. Started as a total beginner in freshers' week and never left.
+  bio: Placeholder bio — one or two sentences about this person.
 
-- name: Joshua Carter
+- name: Committee Member 2
   role: Vice-President
   group: committee
   season: 2026/27
-  photo: images/people/joshua-carter.svg
 
-- name: Priya Raman
+- name: Committee Member 3
   role: Treasurer
   group: committee
   season: 2026/27
 
-- name: Tom Whitfield
+- name: Committee Member 4
   role: Secretary
   group: committee
   season: 2026/27
-  photo: images/people/tom-whitfield.svg
 
-- name: Eilidh MacLeod
+- name: Committee Member 5
   role: Social Secretary
   group: committee
   season: 2026/27
-  bio: Organiser of the legendary end-of-season ceilidh.
 
-- name: Ben Hartley
+- name: Committee Member 6
   role: Kit & Equipment Officer
   group: committee
   season: 2026/27
 
-- name: Sofia Marchetti
+- name: Committee Member 7
   role: Welfare Officer
   group: committee
   season: 2026/27
-  photo: images/people/sofia-marchetti.svg
 
-- name: Liam Doherty
+- name: Committee Member 8
   role: Publicity Officer
   group: committee
   season: 2026/27
 
 # ---------- 2026/27 — Captains ----------
-- name: Daniel Osei
+- name: Captain 1
   role: Open Captain
   group: captains
   season: 2026/27
 
-- name: Hannah Price
+- name: Captain 2
   role: Women's Captain
   group: captains
   season: 2026/27
 
-- name: Chloe Bennett
+- name: Captain 3
   role: Mixed Captain
   group: captains
   season: 2026/27
 
 # ---------- 2026/27 — Coaches ----------
-- name: Ruth Ellison
+- name: Coach 1
   role: Head Coach
   group: coaches
   season: 2026/27
   order: 1                      # optional — smaller number = shown first in its group
-  bio: Former club captain, now coaching the first teams.
 
-- name: Kenji Watanabe
+- name: Coach 2
   role: Assistant Coach
   group: coaches
   season: 2026/27
   order: 2
 
 # ---------- 2025/26 — Committee (history) ----------
-- name: Oliver Grant
+- name: Former Member 1
   role: President
-  group: committee
-  season: 2025/26
-
-- name: Amira Haddad
-  role: Treasurer
-  group: committee
-  season: 2025/26
-
-- name: Joshua Carter
-  role: Secretary
   group: committee
   season: 2025/26
