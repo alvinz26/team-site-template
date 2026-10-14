@@ -26,6 +26,7 @@ content/
 ├── honours.yaml         荣誉（荣誉模块开启时必需）
 ├── news/*.md            新闻，每篇一个文件（新闻模块开启时至少 0 篇）
 ├── pages/about.md       关于页（必需）
+├── pages/join.md        首页"加入我们"一块的内容（可选，D32）
 └── images/              所有图片，按用途分目录
     ├── brand/           logo
     ├── home/            首页主图
@@ -51,6 +52,7 @@ content/
 | `org` | 文本 | — | 所属学校或机构 | `Northvale University` |
 | `founded` | 整数（年份） | — | 成立年份。使用 `auto: seasons` 统计项时必填 | `2004` |
 | `description` | 文本 | ✅ | 2–3 句简介。显示在首页，也会作为搜索引擎摘要 | 见示例文件 |
+| `notice` | 文本 | — | 全站通知横幅，显示在每一页顶部。不需要时删掉这一行（D33） | `Trials this Saturday — everyone welcome` |
 
 ### 1.2 品牌
 
@@ -144,8 +146,20 @@ content/
 | `nav.honours` | Honours |
 | `nav.news` | News |
 | `nav.contact` | Contact |
+| `home.joinButton` | Come to training |
+| `home.aboutButton` | About us |
+| `home.joinTitle` | New to ultimate? |
+| `home.newsTitle` | Latest news |
+| `home.allNews` | All news |
+| `home.seeEveryone` | See everyone |
+| `common.skipToContent` | Skip to content |
+| `common.menu` | Menu |
+| `contact.email` | Email |
+| `contact.socials` | Follow us |
+| `contact.none` | Contact details coming soon. |
+| `news.empty` | No news yet. |
 
-Stage 2、Stage 3 做页面时还会增加键（如 "Read more"、"Latest news"、筛选器上的 "All"），每个新键都会有默认值，并补充到这张表里。写了不存在的键会报错，防止拼写错误。
+Stage 3 做荣誉页时还会增加键（如筛选器上的 "All"），每个新键都会有默认值，并补充到这张表里。写了不存在的键会报错，防止拼写错误。
 
 ---
 
@@ -159,7 +173,7 @@ Stage 2、Stage 3 做页面时还会增加键（如 "Read more"、"Latest news"�
 | `role` | 文本 | ✅ | 职务 | `President` |
 | `group` | 代号 | ✅ | 必须是 `site.yaml → people.groups` 里的某个 `key` | `committee` |
 | `season` | 赛季 | ✅ | 见总体规则 | `2026/27` |
-| `photo` | 图片路径 | — | 不填时显示姓名首字母头像 | `images/people/maya-okafor.jpg` |
+| `photo` | 图片路径 | — | 不填时显示灰色圆形 + 姓名首字母 | `images/people/maya-okafor.jpg` |
 | `bio` | 文本 | — | 一两句介绍 | |
 | `order` | 整数 | — | 组内排序，数字小的在前。不填的人按文件里的顺序排在有 `order` 的人后面 | `1` |
 
@@ -206,7 +220,7 @@ Stage 2、Stage 3 做页面时还会增加键（如 "Read more"、"Latest news"�
 | `title` | 文本 | ✅ | 标题 | `Mixed take silver at the Northvale Classic` |
 | `date` | 日期 `YYYY-MM-DD` | ✅ | 发布日期，用于排序（新的在前） | `2026-10-05` |
 | `summary` | 文本 | ✅ | 一两句摘要，显示在新闻列表和首页卡片上 | |
-| `cover` | 图片路径 | — | 封面图。不填时显示主色占位块。替代文字为空（视为装饰图，因为标题已经说明了内容） | `images/news/northvale-classic.svg` |
+| `cover` | 图片路径 | — | 封面图。不填时显示灰色占位块（D30）。替代文字为空（视为装饰图，因为标题已经说明了内容） | `images/news/northvale-classic.svg` |
 
 第二个 `---` 之后是正文，使用 Markdown。支持标题、列表、加粗、引用、表格和图片。
 
@@ -216,9 +230,13 @@ Stage 2、Stage 3 做页面时还会增加键（如 "Read more"、"Latest news"�
 
 纯 Markdown，不需要 frontmatter。页面标题来自 `labels.nav.about`。
 
-正文图片写法：`![图片描述](images/about/team-2019.jpg)`。路径规则和其他地方一样，从 `content/` 开始写。
+正文图片写法：`![图片描述](images/about/team-2019.jpg)`。路径规则和其他地方一样，从 `content/` 开始写，新闻正文也一样（Stage 2 测试 S9、S10 验证）。
 
-> 【假设】正文里的图片和 frontmatter 里的图片走不同的处理流程。Stage 0 已验证 frontmatter 图片可以统一写成 `images/...`；正文图片的统一写法要在 Stage 2 加一个小插件，届时验证。
+## 5b. `content/pages/join.md` — 首页"加入我们"（可选，D32）
+
+纯 Markdown，不需要 frontmatter。内容显示在首页"New to ultimate?"那一块（标题来自 `labels.home.joinTitle`），首屏的主按钮会跳到这里。
+
+建议写：是否欢迎零基础、训练时间、地点、费用、怎么联系。**没有这个文件时整块隐藏**，首屏主按钮改为跳到联系页。
 
 ---
 
