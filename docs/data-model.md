@@ -267,7 +267,7 @@ Stage 2、Stage 3 做页面时还会增加键（如 "Read more"、"Latest news"�
 | 从项目根目录的 `content/` 读取集合（不放在 `src/` 里） | ✅ 可以 |
 | YAML 单个对象（`site.yaml`）作为集合 | ✅ 需要自定义解析器包一层，可以 |
 | YAML 和 md 里写 `images/...` 引用图片 | ✅ 可以，输出路径自动带 base |
-| 必填字段缺失 | ✅ 构建失败，但报错是 `people → 0 … role: Required`，用序号指出条目、行号显示 0:0，**普通人看不懂** → Stage 1 要包装报错 |
-| 图片文件不存在 | ✅ 构建失败：`Could not find requested image images/people/typo.svg` |
-| **YAML 语法错误（如缩进错）** | ❌ **构建成功**，只打印一行错误，然后该集合变为空，网站上成员页会是空的 → Stage 1 必须修复（D6） |
-| YAML 文件带 BOM（Windows 记事本"UTF-8 with BOM"） | ❌ 解析失败 → Stage 1 解析前去掉 BOM（D6） |
+| 必填字段缺失 | ✅ 构建失败，但报错是 `people → 0 … role: Required`，用序号指出条目、行号显示 0:0，**普通人看不懂** → Stage 1 已修复：自己校验，报出文件 → 条目（行号）→ 字段（测试 T5） |
+| 图片文件不存在 | ✅ 构建失败：`Could not find requested image images/people/typo.svg`，但不说是哪个文件的哪一条 → Stage 1 已补上（T8） |
+| **YAML 语法错误（如缩进错）** | ❌ **构建成功**，只打印一行错误，然后该集合变为空，网站上成员页会是空的 → Stage 1 已修复：构建失败并报出行号和那一行的原文（T6） |
+| YAML 文件带 BOM（Windows 记事本"UTF-8 with BOM"） | ❌ 解析失败 → Stage 1 已修复：读取时去掉 BOM（T7） |

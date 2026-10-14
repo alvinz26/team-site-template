@@ -22,7 +22,7 @@
 3. 点 **Commit changes**
 4. 回到对应的文件（如 `people.yaml`），把图片路径填进去
 
-> 网站多久更新、改错了怎么看报错：Stage 1 完成部署后会补充到这里。
+**多久能看到更新：** 提交后大约 **1–3 分钟**。在仓库页面顶部点 **Actions**，能看到正在运行的 "Deploy to GitHub Pages"：黄色圆圈表示正在发布，绿色 ✓ 表示已经上线（如果没变化，刷新网页试试），红色 ✗ 表示内容有错、网站没有更新（见第五节）。
 
 ---
 
@@ -154,4 +154,21 @@ labels:
 
 - 网站只会在内容**全部正确**时才更新。改错了，线上网站会保持上一个正确的版本，不会坏掉
 - GitHub 保存了每一次修改的记录，任何改动都能恢复
-- 具体怎么看报错，等 Stage 1 完成部署后补充到这里
+
+**怎么看报错：**
+1. 仓库页面顶部点 **Actions**，点开带红色 ✗ 的那一次运行
+2. 点左边的 **build**，再点开红色的那一步
+3. 找到 `Content check failed` 开头的一段，例如：
+
+```
+Content check failed: 2 problems found.
+The website was NOT updated. Fix the problems below, save, and it will try again.
+
+content/site.yaml
+  • colors.primary — is empty. Colours must be written in quotes, e.g.  primary: "#0f5c6e" ...
+
+content/people.yaml → 2026/27 · Tom Whitfield (line 28)
+  • photo — image not found: "images/people/tom-whitfeild.svg". Check the file name ...
+```
+
+每一条都写明了：**哪个文件 → 哪一条（第几行）→ 哪个字段 — 问题和改法**。报错是英文的，看不懂可以整段复制到翻译软件里。按提示改好再提交一次，网站就会更新。
