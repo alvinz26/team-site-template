@@ -1,53 +1,60 @@
 # =============================================================
 #  Site settings — the whole site reads from this file.
 #  Field reference: docs/data-model.md   Guide (中文): docs/content-guide.md
-#
-#  Durham University Ultimate Frisbee Club — real public information, used with the
-#  club's permission (DECISIONS.md D41). Sources: the Team Durham Ultimate Frisbee page,
-#  the club's Instagram and Linktree. Unconfirmed details are left out for now.
+#  Everything here is FICTIONAL example data. Replace it with your own.
 # =============================================================
 
 # ---------- Basic info ----------
-name: Durham University Ultimate Frisbee Club
-shortName: DUF
-tagline: Mixed-gender, mixed-ability — everyone welcome.
-org: Durham University · Team Durham
-# founded:                       # unknown for now — add the year when confirmed
+name: Northvale University Ultimate Frisbee Club   # full name, shown on the home page and in the browser tab
+shortName: Northvale Ultimate                      # short name, shown in the navigation bar
+tagline: Fast feet, big hucks, better spirit.      # one line under the name on the home page
+org: Northvale University                          # optional — school / organisation you belong to
+founded: 2004                                      # optional — year founded (a number, no quotes)
 description: >-
-  Durham Ultimate Frisbee (DUF) is one of the highest-performing university teams in the
-  country, qualifying for every National Championship in the 2024–25 season. Most of our
-  players had never heard of ultimate before arriving — and everyone is welcome.
+  Northvale Ultimate is the university's frisbee club. We train three times a week,
+  welcome complete beginners, and send open, women's and mixed teams to student
+  competitions across the country.
 
-# ---------- Site-wide notice (optional) ----------
-notice: This website is under development — some information may be incomplete.
+# ---------- Site-wide notice ----------
+notice: "Demo site with a fictional club. Real example: durham-ultimate-frisbee.github.io/website"
 
 # ---------- Brand ----------
-logo: images/brand/logo.jpg       # the club crest
+logo: images/brand/logo.svg       # optional — leave out to show the short name as text instead
 colors:
-  primary: "#3d1240"              # deep purple from the club logo. Keep the quotes!
-  accent: "#8a2f8a"               # brighter purple from the club logo. Keep the quotes!
+  primary: "#0f5c6e"              # main colour (nav bar, headings). Keep the quotes!
+  accent: "#f4b942"               # highlight colour (buttons, links). Keep the quotes!
 
 # ---------- Contact ----------
-# email:                          # no public email yet
-socials:
-  - platform: instagram
-    url: https://www.instagram.com/durhamultimatefrisbee/
+email: hello@example.com          # optional — shown on the Contact page
+socials:                          # optional — icons in the footer and on the Contact page
+  - platform: instagram           # one of: instagram, facebook, x, tiktok, youtube, whatsapp, website
+    url: https://example.com/instagram
   - platform: facebook
-    url: https://www.facebook.com/groups/durhamultimatefrisbee/
+    url: https://example.com/facebook
+  - platform: youtube
+    url: https://example.com/youtube
+  - platform: whatsapp
+    url: https://example.com/whatsapp
 
 # ---------- Home page ----------
-# hero:                           # optional — the big picture at the top of the home page
-#   image: images/home/hero.jpg
-#   alt: Describe the picture for screen readers
+hero:                             # optional — the big picture at the top of the home page
+  image: images/home/hero.svg
+  alt: Players stretching out for a disc on a sunny pitch   # describe the picture for screen readers
 
-# stats:                          # optional — add numbers when confirmed, e.g.
-#   - label: Founded
-#     value: "2000"
+stats:                            # optional — the row of big numbers on the home page
+  - label: Founded
+    value: "2004"
+  - label: Honours won
+    auto: honours                 # counted automatically from honours.yaml
+  - label: Seasons played
+    auto: seasons                 # counted automatically (see docs/data-model.md)
+  - label: Members
+    value: 80+
 
 # ---------- Optional modules ----------
 modules:
-  honours: true
-  news: true
+  honours: true                   # false = hide the Honours page and the honours parts of the home page
+  news: true                      # false = hide the News pages and the latest news on the home page
 
 # ---------- People page ----------
 people:
@@ -61,13 +68,12 @@ people:
 
 # ---------- Honours page ----------
 honours:
-  facets:
+  facets:                         # filters on the Honours page. Every team can choose its own.
     - key: level
       label: Level
       options:
         - Nationals
         - Regionals
-        - League
         - Tournament
     - key: surface
       label: Indoor / Outdoor
@@ -78,10 +84,10 @@ honours:
     - key: division
       label: Division
       options:
-        - Men's
+        - Open
         - Women's
         - Mixed
-  results:
+  results:                        # what a result can be. rank 1 = best.
     - key: gold
       label: Gold
       emoji: "🥇"
@@ -98,3 +104,12 @@ honours:
       label: Spirit Award
       emoji: "🕊️"
       rank: 4
+  aliases:                        # optional — other spellings of the same person, merged on the leaderboard
+    Joshua Carter:
+      - Josh Carter
+
+# ---------- Interface text (optional) ----------
+# Leave this out to use the English defaults. Only list what you want to change.
+labels:
+  nav:
+    honours: Trophy Cabinet
