@@ -14,6 +14,8 @@ Captain Chloe Bennett said the squad was proud of the result:
 
 Thanks to every volunteer who helped run the fields, the scorers' tent and the barbecue.
 
+![The mixed squad after the final](images/news/northvale-classic.svg)
+
 ## What's next
 
 Indoor training starts on Tuesdays from next week. Beginners are always welcome — just turn up in trainers.

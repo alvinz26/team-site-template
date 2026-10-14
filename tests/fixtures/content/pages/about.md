@@ -2,6 +2,8 @@ Northvale University Ultimate Frisbee Club was founded in 2004 by a handful of s
 met throwing a disc on the south field after lectures. Twenty-odd years later we are one of the
 largest sports clubs at the university.
 
+![The club on the south field](images/home/hero.svg)
+
 ## What we do
 
 - **Training** three times a week — indoor in winter, outdoor from spring
