@@ -46,4 +46,7 @@
 | D38 | Astro 返回集合条目时按 id 字母顺序排序，不是按文件顺序（测试 S7d 发现了这个问题）。所以成员和荣誉在数据库里的 id 前面加上 4 位序号（`0001 · 2026/27 · Maya Okafor`），这样页面上的顺序和文件里一致。报错信息里仍然显示不带序号的名字 | 🟡 | 2026-10-14 |
 | D39 | Markdown 正文图片的 `images/...` 写法改成在加载器里直接改写路径，不用 remark 插件。原因：Astro 7 默认的 Markdown 处理器（Sätteri）不再支持 remark 插件，用插件还得额外装 `@astrojs/markdown-remark` | 🟡 | 2026-10-14 |
 | D40 | 开发服务器忽略 `.test-work/`，这样在 `astro dev` 运行时跑测试不会干扰它 | 🟡 | 2026-10-14 |
+| D41 | **取代 D19 和 D28（选项 A）**：用户已经取得俱乐部许可，`content/` 直接放 Durham University Ultimate Frisbee Club（简称 DUF）的**真实公开信息**，来源只限官方渠道：Team Durham 官方页、俱乐部的 Instagram 和 Linktree。**没有确认的一律不填**：委员会名单、邮箱、成立年份、训练时间、logo、照片，以及赛季或缩写不明的成绩。顶部横幅改成 "This website is under development"。组别改为 Men's / Women's / Mixed，级别新增 League。测试仍然使用虚构的 fixture 数据（D29），所以模板的通用性不受影响。资料整理在仓库外的 `durham-content/FINDINGS.md` | ✅ | 2026-10-14 |
+| D42 | 成员页没有任何成员时，显示 `labels.people.empty`（默认 "Coming soon."），不留空白页 | 🟡 | 2026-10-14 |
+| D43 | 每个测试构建都用自己的 Astro 缓存目录（`ASTRO_CACHE_DIR`，放在 `.test-work/` 里）。原因：测试构建带 `--force`，会清空 `node_modules/.astro` 里的内容缓存，正在运行的 `astro dev` 用的也是这个缓存，结果开发服务器就坏掉了。这属于 D24 允许的接线修复，断言没有改。**已知限制**：项目根目录下的 `.astro/` 类型文件仍然是共用的。曾经在 dev server 刚启动的几秒内跑测试，出现过一次 S0 失败，之后连续两次（dev server 都开着）都没能复现。CI 上没有 dev server，不受影响 | 🟡 | 2026-10-14 |
 | D37 | Stage 边界：荣誉页、导航里的荣誉项、首页荣誉块、自动统计（`auto:`）都在 Stage 3 做。Stage 2 的统计行只显示手写的数值 | 🟡 | 2026-10-14 |
