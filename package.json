@@ -1,0 +1,20 @@
+{
+  "name": "team-site-template",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A static, zero-backend website template for sports teams and student clubs.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node --test --test-concurrency=1 \"tests/**/*.test.mjs\""
+  },
+  "dependencies": {
+    "astro": "7.3.8",
+    "yaml": "2.9.1"
+  }
+}
