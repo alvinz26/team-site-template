@@ -101,7 +101,7 @@ honours:
       label: Spirit Award
       emoji: "🕊️"
       rank: 4
-  aliases:                        # PROPOSAL (pending decision): different spellings of the same person
+  aliases:                        # optional — other spellings of the same person, merged on the leaderboard
     Joshua Carter:
       - Josh Carter
 
