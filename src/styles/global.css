@@ -449,6 +449,7 @@ a.card:hover {
 .card__media {
   aspect-ratio: 16 / 9;
   width: 100%;
+  height: auto; /* the image's height attribute would otherwise override the aspect ratio */
   object-fit: cover;
 }
 
@@ -695,6 +696,7 @@ a.card:hover {
 
 .article-cover {
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: var(--radius);
