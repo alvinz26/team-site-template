@@ -21,6 +21,16 @@
     - label: UK Ultimate results
       url: https://www.ukultimate.com/news/uwin-d2-2026-winners
 
+# Confirmed by the club ("UMON 26 🥉" on the club's Instagram), March 2026
+- season: 2025/26
+  competition: University Men's Outdoor Nationals (Div 2)
+  team: Men's
+  result: bronze
+  tags:
+    level: Nationals
+    surface: Outdoor
+    division: Men's
+
 # Team Durham news, 24 Nov 2022 (12–13 Nov 2022, Newcastle; final won against Manchester)
 - season: 2022/23
   competition: University Men's Indoor Northern Regionals

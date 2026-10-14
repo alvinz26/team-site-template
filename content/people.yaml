@@ -4,14 +4,9 @@
 #  `group` must be one of the keys in site.yaml → people.groups.
 #  The People page shows the newest season; older seasons are kept as history.
 #
-#  Source: Team Durham Ultimate Frisbee page, as listed on 14 Oct 2026 (DECISIONS.md D54).
-#  The rest of the 2026/27 committee will be added once confirmed.
+#  Coach confirmed by the club (DECISIONS.md D55). The 2026/27 exec (committee and
+#  captains) will be added when the club sends the list.
 # =============================================================
-
-- name: Sophie Bull
-  role: Club Captain
-  group: captains
-  season: 2026/27
 
 - name: Annie Glasspool
   role: Coach

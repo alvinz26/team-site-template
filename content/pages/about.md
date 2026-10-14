@@ -21,6 +21,7 @@ the sport and of our club.
 ## Highlights
 
 - **Gold** — University Women's Indoor Nationals, Division 2 (2026)
+- **Bronze** — University Men's Outdoor Nationals, Division 2 (2026)
 - **Men's Indoor Northern Regional Champions** (2022/23) — with all four Durham men's teams competing
 - **2nd place** — Men's Indoor Nationals (2020)
 - **Men's Outdoor Northern League Champions** (2019)
