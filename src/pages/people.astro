@@ -15,6 +15,7 @@ const season = groups[0]?.people[0]?.season;
       <h1>{title}</h1>
       {season && <p class="meta">{season}</p>}
     </header>
+    {groups.length === 0 && <p class="section">{site.labels.people.empty}</p>}
     {
       groups.map((group) => (
         <section class="group section" data-group={group.key} aria-labelledby={`group-${group.key}`}>

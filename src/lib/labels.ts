@@ -31,6 +31,9 @@ export const DEFAULT_LABELS = {
   news: {
     empty: 'No news yet.',
   },
+  people: {
+    empty: 'Coming soon.',
+  },
 };
 
 export type Labels = typeof DEFAULT_LABELS;

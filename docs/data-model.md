@@ -158,6 +158,7 @@ content/
 | `contact.socials` | Follow us |
 | `contact.none` | Contact details coming soon. |
 | `news.empty` | No news yet. |
+| `people.empty` | Coming soon. |
 
 Stage 3 做荣誉页时还会增加键（如筛选器上的 "All"），每个新键都会有默认值，并补充到这张表里。写了不存在的键会报错，防止拼写错误。
 
