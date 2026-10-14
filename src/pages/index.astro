@@ -1,13 +1,24 @@
 ---
-// Placeholder for Stage 1 step 1 (tests first). Replaced in step 2.
+// Stage 1: a deliberately empty home page that proves content, images and the base path work.
+// The real layout and pages arrive in Stage 2.
+import { Image } from 'astro:assets';
+import { getSite } from '../lib/content';
+
+const site = await getSite();
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Placeholder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{site.name}</title>
+    <meta name="description" content={site.description} />
   </head>
   <body>
-    <p>Placeholder</p>
+    <main>
+      {site.logo && <Image src={site.logo} alt={site.name} width={120} height={120} />}
+      <h1>{site.name}</h1>
+      <p>{site.tagline}</p>
+    </main>
   </body>
 </html>
