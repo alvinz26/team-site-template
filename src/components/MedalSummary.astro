@@ -1,5 +1,6 @@
 ---
 // Count of honours per result type, e.g. 🥇 3 Gold · 🥈 3 Silver (always all-time totals).
+// Result types the club hasn't won yet are left out rather than shown as "0".
 import type { getMedalSummary } from '../lib/content';
 
 interface Props {
@@ -9,7 +10,7 @@ const { summary } = Astro.props;
 ---
 <ul class="medals">
   {
-    summary.map((r) => (
+    summary.filter((r) => r.count > 0).map((r) => (
       <li data-result-count={r.key}>
         {r.emoji && <span aria-hidden="true">{r.emoji}</span>}
         <strong>{r.count}</strong> {r.label}
