@@ -61,7 +61,14 @@ export function buildSite({ mutate, env = {}, from = FIXTURE_CONTENT } = {}) {
   delete baseEnv.GITHUB_REPOSITORY; // local builds must not inherit CI's value unless a test sets it
   const res = spawnSync(process.execPath, [ASTRO_BIN, 'build', '--force', '--outDir', dist], {
     cwd: ROOT,
-    env: { ...baseEnv, ASTRO_TELEMETRY_DISABLED: '1', NO_COLOR: '1', CONTENT_DIR: contentDir, ...env },
+    env: {
+      ...baseEnv,
+      ASTRO_TELEMETRY_DISABLED: '1',
+      NO_COLOR: '1',
+      CONTENT_DIR: contentDir,
+      ASTRO_CACHE_DIR: path.join(work, 'cache'), // never touch the cache a running `astro dev` uses
+      ...env,
+    },
     encoding: 'utf8',
     timeout: 180_000,
   });
