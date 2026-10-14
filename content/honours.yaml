@@ -4,10 +4,37 @@
 #  Each `tags` value must be one of the options in site.yaml → honours.facets.
 #  `roster` feeds the player leaderboard: write each name the SAME way every time.
 #
-#  Results published by the club on the Team Durham page (DECISIONS.md D41).
-#  More results (and rosters) will be added once confirmed.
+#  Sources (DECISIONS.md D41): UK Ultimate results pages, Team Durham news and the
+#  Team Durham Ultimate Frisbee page. More results (and rosters) can be added any time.
 # =============================================================
 
+# UK Ultimate: https://www.ukultimate.com/news/uwin-d2-2026-winners (14–15 Feb 2026, Coventry)
+- season: 2025/26
+  competition: University Women's Indoor Nationals (Div 2)
+  team: Women's
+  result: gold
+  tags:
+    level: Nationals
+    surface: Indoor
+    division: Women's
+  links:
+    - label: UK Ultimate results
+      url: https://www.ukultimate.com/news/uwin-d2-2026-winners
+
+# Team Durham news, 24 Nov 2022 (12–13 Nov 2022, Newcastle; final won against Manchester)
+- season: 2022/23
+  competition: University Men's Indoor Northern Regionals
+  team: Men's
+  result: gold
+  tags:
+    level: Regionals
+    surface: Indoor
+    division: Men's
+  links:
+    - label: Team Durham report
+      url: https://www.durham.ac.uk/colleges-and-student-experience/team-durham/news/the-ultimate-success-for-frisbee/
+
+# Team Durham Ultimate Frisbee page, highlights ("'20" and "'19")
 - season: 2019/20
   competition: Men's Indoor Nationals
   team: Men's

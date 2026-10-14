@@ -12,12 +12,23 @@ high-level competitions, some even internationally.
 - **Beginners Tournaments** — in Michaelmas term, so new players can compete in a low-pressure setting
 - **Socials** — frequent socials throughout the year, a great way to get to know everyone in DUF
 
+## Spirit of the Game
+
+Ultimate has no referees: players make their own calls, and every game ends with a spirit
+circle. Respect for opponents and fair play — the *spirit of the game* — is at the heart of
+the sport and of our club.
+
 ## Highlights
 
-- 2nd place at Men's Indoor Nationals 2020
-- Men's Outdoor Northern League Champions 2019
+- **Gold** — University Women's Indoor Nationals, Division 2 (2026)
+- **Men's Indoor Northern Regional Champions** (2022/23) — with all four Durham men's teams competing
+- **2nd place** — Men's Indoor Nationals (2020)
+- **Men's Outdoor Northern League Champions** (2019)
 
-## Find out more
+Every result is listed on the Honours page.
 
-Follow us on [Instagram](https://www.instagram.com/durhamultimatefrisbee/) or join our
-[Facebook group](https://www.facebook.com/groups/durhamultimatefrisbee/) for the latest news.
+## Watch and follow
+
+- [Men's and Women's Outdoor Nationals vlog](https://www.youtube.com/watch?v=YS5EFFcMGKA) (YouTube)
+- Livestreams in our [DUF TV Facebook group](https://www.facebook.com/groups/duf.tv/)
+- [Instagram](https://www.instagram.com/durhamultimatefrisbee/) and our [Facebook group](https://www.facebook.com/groups/durhamultimatefrisbee/) for the latest news

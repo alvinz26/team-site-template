@@ -22,7 +22,7 @@ description: >-
 notice: This website is under development — some information may be incomplete.
 
 # ---------- Brand ----------
-# logo: images/brand/logo.png    # add the club logo file here when available
+logo: images/brand/logo.jpg       # the club crest
 colors:
   primary: "#3d1240"              # deep purple from the club logo. Keep the quotes!
   accent: "#8a2f8a"               # brighter purple from the club logo. Keep the quotes!
