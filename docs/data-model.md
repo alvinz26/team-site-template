@@ -152,6 +152,16 @@ content/
 | `home.newsTitle` | Latest news |
 | `home.allNews` | All news |
 | `home.seeEveryone` | See everyone |
+| `home.honoursTitle` | Honours |
+| `home.allHonours` | All honours |
+| `honours.filtersTitle` | Filter results |
+| `honours.all` | All |
+| `honours.captain` | Captain |
+| `honours.squad` | Squad |
+| `honours.leaderboardTitle` | Player leaderboard |
+| `honours.player` | Player |
+| `honours.empty` | No honours yet. |
+| `honours.noMatch` | No results match these filters. |
 | `common.skipToContent` | Skip to content |
 | `common.menu` | Menu |
 | `contact.email` | Email |
@@ -160,7 +170,7 @@ content/
 | `news.empty` | No news yet. |
 | `people.empty` | Coming soon. |
 
-Stage 3 做荣誉页时还会增加键（如筛选器上的 "All"），每个新键都会有默认值，并补充到这张表里。写了不存在的键会报错，防止拼写错误。
+写了不存在的键会报错，防止拼写错误。
 
 ---
 
