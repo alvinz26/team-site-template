@@ -15,6 +15,7 @@ import path from 'node:path';
 import { LineCounter, parseDocument, isSeq, type Document } from 'yaml';
 import { z } from 'astro/zod';
 import { honourSchema, newsSchema, personSchema, seasonYear, siteSchema } from './content-schema';
+import { aliasMap, participants, similarNames } from './honours-logic';
 
 /** Where content lives. CONTENT_DIR exists only so tests can point at a scratch copy (D23). */
 export const CONTENT_DIR = path.resolve(process.env.CONTENT_DIR ?? 'content');
@@ -42,6 +43,8 @@ export interface ValidContent {
   about: MarkdownEntry<Record<string, never>>;
   /** Optional home-page "join us" text (D32). */
   join?: MarkdownEntry<Record<string, never>>;
+  /** Non-fatal notes for the build log, e.g. possible duplicate names (D14). */
+  warnings: string[];
 }
 
 // ---------------------------------------------------------------------------
@@ -425,7 +428,19 @@ export function loadContent(): ValidContent {
   const about = loadPage('about', true, problems);
   const join = loadPage('join', false, problems);
   if (problems.length > 0 || !site || !about) throw new ContentError(problems);
-  return { site, people, honours, news, about, join };
+  return { site, people, honours, news, about, join, warnings: duplicateNameWarnings(site, honours) };
+}
+
+/** D14: spellings that look like one person are reported (not fatal), with the alias to add. */
+function duplicateNameWarnings(site: Site, honours: Entry<Honour>[]): string[] {
+  const aliases = aliasMap(site.honours?.aliases);
+  const names = honours.flatMap((h) => participants(h.data, aliases));
+  return similarNames(names).map(
+    ([a, b]) =>
+      `Possible duplicate names in honours.yaml: "${a}" and "${b}". ` +
+      `If they are the same person, add this to site.yaml under honours:\n` +
+      `  aliases:\n    ${a}:\n      - ${b}`,
+  );
 }
 
 export { seasonYear };

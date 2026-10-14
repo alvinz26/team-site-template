@@ -1,0 +1,64 @@
+---
+// One honour. `compact` (home page) leaves out the photo, links and squad list.
+import { Image } from 'astro:assets';
+import type { Honour, Site } from '../lib/content';
+
+interface Props {
+  honour: Honour;
+  site: Site;
+  compact?: boolean;
+}
+const { honour, site, compact = false } = Astro.props;
+const { labels } = site;
+const result = site.honours?.results.find((r) => r.key === honour.result);
+const tags = honour.tags ?? {};
+const squad = [...new Set([...(honour.captains ?? []), ...(honour.roster ?? [])])];
+---
+<article class="honour card" data-honour data-tags={JSON.stringify(tags)}>
+  {
+    !compact && honour.photo && (
+      <Image class="card__media" src={honour.photo} alt={`${honour.team} at ${honour.competition} ${honour.season}`} widths={[400, 800]} sizes="(min-width: 48rem) 50vw, 100vw" />
+    )
+  }
+  <div class="card__body">
+    <p class="honour__result" data-result={honour.result}>
+      {result?.emoji && <span aria-hidden="true">{result.emoji} </span>}{result?.label}
+      {compact && <span class="meta"> · {honour.season}</span>}
+    </p>
+    <h3>{honour.competition}</h3>
+    <p>
+      {honour.team}
+      {honour.captains && honour.captains.length > 0 && <> · {labels.honours.captain}: {honour.captains.join(', ')}</>}
+    </p>
+    {
+      !compact && Object.keys(tags).length > 0 && (
+        <ul class="tags">
+          {Object.values(tags).map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      !compact && honour.links && honour.links.length > 0 && (
+        <p class="honour__links">
+          {honour.links.map((l) => (
+            <a href={l.url} target="_blank" rel="noopener noreferrer">
+              {l.label} ↗
+            </a>
+          ))}
+        </p>
+      )
+    }
+    {
+      !compact && squad.length > 0 && (
+        <details class="honour__squad">
+          <summary>
+            {labels.honours.squad} ({squad.length})
+          </summary>
+          <p>{squad.join(', ')}</p>
+        </details>
+      )
+    }
+  </div>
+</article>

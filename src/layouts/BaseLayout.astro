@@ -17,11 +17,12 @@ const { title, description } = Astro.props;
 const site = await getSite();
 const { labels, modules } = site;
 
-// Navigation follows the module switches (D31). Honours joins in Stage 3.
+// Navigation follows the module switches (D31).
 const nav = [
   { path: '', label: labels.nav.home },
   { path: 'about/', label: labels.nav.about },
   { path: 'people/', label: labels.nav.people },
+  ...(modules.honours ? [{ path: 'honours/', label: labels.nav.honours }] : []),
   ...(modules.news ? [{ path: 'news/', label: labels.nav.news }] : []),
   { path: 'contact/', label: labels.nav.contact },
 ];

@@ -18,6 +18,18 @@ export const DEFAULT_LABELS = {
     newsTitle: 'Latest news',
     allNews: 'All news',
     seeEveryone: 'See everyone',
+    honoursTitle: 'Honours',
+    allHonours: 'All honours',
+  },
+  honours: {
+    filtersTitle: 'Filter results',
+    all: 'All',
+    captain: 'Captain',
+    squad: 'Squad',
+    leaderboardTitle: 'Player leaderboard',
+    player: 'Player',
+    empty: 'No honours yet.',
+    noMatch: 'No results match these filters.',
   },
   common: {
     skipToContent: 'Skip to content',

@@ -1,0 +1,19 @@
+---
+// Count of honours per result type, e.g. 🥇 3 Gold · 🥈 3 Silver (always all-time totals).
+import type { getMedalSummary } from '../lib/content';
+
+interface Props {
+  summary: Awaited<ReturnType<typeof getMedalSummary>>;
+}
+const { summary } = Astro.props;
+---
+<ul class="medals">
+  {
+    summary.map((r) => (
+      <li data-result-count={r.key}>
+        {r.emoji && <span aria-hidden="true">{r.emoji}</span>}
+        <strong>{r.count}</strong> {r.label}
+      </li>
+    ))
+  }
+</ul>

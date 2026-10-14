@@ -1,0 +1,137 @@
+---
+// Honours at /honours/: medal summary, filters, results by season, player leaderboard.
+// A rest route so nothing is generated when the honours module is off (test H10).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HonourCard from '../../components/HonourCard.astro';
+import MedalSummary from '../../components/MedalSummary.astro';
+import { getHonours, getLeaderboard, getMedalSummary, getSite } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return site.modules.honours ? [{ params: { list: undefined } }] : [];
+}
+
+const site = await getSite();
+const { labels } = site;
+const honours = await getHonours();
+const summary = await getMedalSummary();
+const board = await getLeaderboard();
+const facets = site.honours?.facets ?? [];
+const results = summary; // already sorted best first
+
+// Group by season, keeping newest-first order.
+const seasons: { season: string; honours: typeof honours }[] = [];
+for (const h of honours) {
+  const last = seasons.at(-1);
+  if (last && last.season === h.season) last.honours.push(h);
+  else seasons.push({ season: h.season, honours: [h] });
+}
+const title = labels.nav.honours;
+---
+<BaseLayout title={title}>
+  <div class="container">
+    <header class="page-title"><h1>{title}</h1></header>
+
+    {honours.length === 0 && <p class="section">{labels.honours.empty}</p>}
+
+    {
+      honours.length > 0 && (
+        <>
+          <MedalSummary summary={summary} />
+
+          {facets.length > 0 && (
+            <div class="filters" data-filters hidden>
+              <p class="filters__title">{labels.honours.filtersTitle}</p>
+              {facets.map((f) => (
+                <div class="filters__field">
+                  <label for={`filter-${f.key}`}>{f.label}</label>
+                  <select id={`filter-${f.key}`} data-facet={f.key}>
+                    <option value="">{labels.honours.all}</option>
+                    {f.options.map((o) => (
+                      <option value={o}>{o}</option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+            </div>
+          )}
+          <p class="filters__none" data-no-match hidden>
+            {labels.honours.noMatch}
+          </p>
+
+          {seasons.map((s) => (
+            <section class="season" data-season={s.season} aria-labelledby={`season-${s.season.replace(/\W+/g, '-')}`}>
+              <h2 id={`season-${s.season.replace(/\W+/g, '-')}`}>{s.season}</h2>
+              <div class="grid">
+                {s.honours.map((h) => (
+                  <HonourCard honour={h} site={site} />
+                ))}
+              </div>
+            </section>
+          ))}
+
+          {board.length > 0 && (
+            <section class="section" aria-labelledby="leaderboard-title">
+              <h2 id="leaderboard-title">{labels.honours.leaderboardTitle}</h2>
+              <div class="table-scroll">
+                <table class="leaderboard" data-leaderboard>
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">{labels.honours.player}</th>
+                      {results.map((r) => (
+                        <th scope="col" title={r.label}>
+                          {r.emoji ? (
+                            <>
+                              <span aria-hidden="true">{r.emoji}</span>
+                              <span class="visually-hidden">{r.label}</span>
+                            </>
+                          ) : (
+                            r.label
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {board.map((row, i) => (
+                      <tr data-player={row.name}>
+                        <td>{i + 1}</td>
+                        <td>{row.name}</td>
+                        {results.map((r) => (
+                          <td>{row.counts[r.key] ?? 0}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
+        </>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<script>
+  // Filters (D: JavaScript only for the menu and these filters). Without JS, everything stays visible.
+  import { matches, type Selection } from '../../lib/honours-logic';
+
+  const panel = document.querySelector<HTMLElement>('[data-filters]');
+  if (panel) {
+    panel.hidden = false;
+    const selects = [...panel.querySelectorAll<HTMLSelectElement>('select[data-facet]')];
+    const entries = [...document.querySelectorAll<HTMLElement>('[data-season] [data-honour]')];
+    const seasons = [...document.querySelectorAll<HTMLElement>('[data-season]')];
+    const none = document.querySelector<HTMLElement>('[data-no-match]');
+
+    const apply = () => {
+      const selection: Selection = Object.fromEntries(selects.map((s) => [s.dataset.facet!, s.value]));
+      for (const e of entries) e.hidden = !matches(JSON.parse(e.dataset.tags ?? '{}'), selection);
+      for (const s of seasons) s.hidden = !s.querySelector('[data-honour]:not([hidden])');
+      if (none) none.hidden = entries.some((e) => !e.hidden);
+    };
+    for (const s of selects) s.addEventListener('change', apply);
+  }
+</script>

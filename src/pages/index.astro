@@ -1,12 +1,14 @@
 ---
-// Home (D31): hero + stats → join → latest news → [honours: Stage 3] → committee preview.
+// Home (D31): hero + stats → join → latest news → honours → committee preview.
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HonourCard from '../components/HonourCard.astro';
+import MedalSummary from '../components/MedalSummary.astro';
 import NewsCard from '../components/NewsCard.astro';
 import PersonCard from '../components/PersonCard.astro';
 import TrianglePattern from '../components/TrianglePattern.astro';
-import { getCurrentPeople, getNews, getPage, getSite } from '../lib/content';
+import { getCurrentPeople, getHonours, getMedalSummary, getNews, getPage, getSite, getStats } from '../lib/content';
 import { url } from '../lib/paths';
 
 const site = await getSite();
@@ -14,10 +16,10 @@ const { labels } = site;
 const join = await getPage('join');
 const JoinContent = join ? (await render(join)).Content : undefined;
 const news = (await getNews()).slice(0, 3);
+const honours = (await getHonours()).slice(0, 3);
+const medals = await getMedalSummary();
 const firstGroup = (await getCurrentPeople())[0];
-
-// Automatic stats ("auto:") are calculated in Stage 3 (D37); until then only written values show.
-const stats = (site.stats ?? []).filter((s): s is { label: string; value: string } => 'value' in s);
+const stats = await getStats();
 ---
 <BaseLayout>
   <section class="hero">
@@ -47,7 +49,7 @@ const stats = (site.stats ?? []).filter((s): s is { label: string; value: string
         <ul class="container">
           {stats.map((s) => (
             <li>
-              <strong>{s.value}</strong>
+              <strong>{s.value}</strong>{' '}
               <span>{s.label}</span>
             </li>
           ))}
@@ -79,6 +81,23 @@ const stats = (site.stats ?? []).filter((s): s is { label: string; value: string
           </div>
           <div class="grid">
             {news.map((post) => <NewsCard post={post} />)}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    honours.length > 0 && (
+      <section class="section" data-section="honours" aria-labelledby="honours-title">
+        <div class="container">
+          <div class="section-head">
+            <h2 id="honours-title">{labels.home.honoursTitle}</h2>
+            <a class="more-link" href={url('honours/')}>{labels.home.allHonours}</a>
+          </div>
+          <MedalSummary summary={medals} />
+          <div class="grid">
+            {honours.map((h) => <HonourCard honour={h} site={site} compact />)}
           </div>
         </div>
       </section>
