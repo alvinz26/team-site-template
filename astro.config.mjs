@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import stripImageMetadata from './src/integrations/strip-image-metadata.mjs';
 
 /**
  * GitHub Pages address, worked out from the repository name (DECISIONS.md D1).
@@ -24,4 +25,5 @@ export default defineConfig({
   // so a running `astro dev` is never disturbed by `npm test` (D40, D43).
   ...(process.env.ASTRO_CACHE_DIR ? { cacheDir: process.env.ASTRO_CACHE_DIR } : {}),
   vite: { server: { watch: { ignored: ['**/.test-work/**'] } } },
+  integrations: [stripImageMetadata()],
 });
