@@ -128,7 +128,7 @@ test('P4 every page has a favicon that exists (with and without a logo)', () => 
   }
 });
 
-test('P5 share previews: og:title, og:description, absolute og:url; og:image only with a hero image', () => {
+test('P5 share previews: og:title, og:description, absolute og:url; a hero image becomes og:image', () => {
   for (const [name, build] of [['fixture', fixture], ['Durham', durham]]) {
     for (const f of htmlFiles(build)) {
       const doc = parse(fs.readFileSync(f, 'utf8'));
@@ -142,7 +142,8 @@ test('P5 share previews: og:title, og:description, absolute og:url; og:image onl
   const image = read(fixture, 'index.html').querySelector('meta[property="og:image"]')?.getAttribute('content');
   assert.ok(image?.startsWith(`${ORIGIN}${BASE}`), `fixture home has a hero, so og:image is expected (${image})`);
   assert.ok(fs.existsSync(path.join(fixture.dist, decodeURIComponent(image.slice(`${ORIGIN}${BASE}`.length)))), 'og:image file missing');
-  assert.equal(read(durham, 'index.html').querySelector('meta[property="og:image"]'), null, 'no hero image → no og:image');
+  // Removed (user-approved, D52): "Durham home has no og:image" — it described today's content,
+  // not a rule, and would have failed CI as soon as the club added a hero photo.
 });
 
 test('P6 a 404 page with navigation, one heading and a link home', () => {
