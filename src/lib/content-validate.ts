@@ -432,7 +432,27 @@ export function loadContent(): ValidContent {
   const about = loadPage('about', true, problems);
   const join = loadPage('join', false, problems);
   if (problems.length > 0 || !site || !about) throw new ContentError(problems);
-  return { site, people, honours, news, about, join, warnings: [...contrastWarnings(site), ...duplicateNameWarnings(site, honours)] };
+  return {
+    site, people, honours, news, about, join,
+    warnings: [...contrastWarnings(site), ...largeImageWarnings(), ...duplicateNameWarnings(site, honours)],
+  };
+}
+
+/**
+ * D58: very large uploads make the repository grow for ever (git keeps every version), even though
+ * the published copy is shrunk. Warn — never fail — so maintainers resize before uploading.
+ */
+const LARGE_IMAGE_BYTES = 5 * 1024 * 1024;
+function largeImageWarnings(): string[] {
+  const dir = path.join(CONTENT_DIR, 'images');
+  if (!fs.existsSync(dir)) return [];
+  return (fs.readdirSync(dir, { recursive: true }) as string[])
+    .map((f) => path.join(dir, f))
+    .filter((f) => IMAGE_EXT.test(f) && fs.statSync(f).size > LARGE_IMAGE_BYTES)
+    .map((f) => {
+      const mb = (fs.statSync(f).size / 1024 / 1024).toFixed(1);
+      return `${rel(f)} is ${mb} MB. Please resize photos to about 2000 px wide (usually under 1 MB) before uploading — large files make the repository grow permanently.`;
+    });
 }
 
 /** Links and headings use the primary colour on white, so it must be dark enough to read (WCAG AA). */
