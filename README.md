@@ -35,7 +35,7 @@ Everything editable is in [`content/`](content/):
 1. Open the file and click the ✏️ (Edit) button.
 2. Make your change, then click **Commit changes…**.
 3. GitHub will offer to **create a new branch and start a pull request** — keep that option and click **Propose changes**, then **Create pull request**.
-4. Wait for the automatic check to show a **green ✓** (about a minute), then click **Squash and merge**.
+4. Wait for the automatic check to show a **green ✓** (usually a few minutes), then click **Squash and merge**.
 
 The step-by-step guide (in Chinese) is [docs/content-guide.md](docs/content-guide.md); every field is described in [docs/data-model.md](docs/data-model.md).
 

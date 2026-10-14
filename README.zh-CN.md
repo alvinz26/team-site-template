@@ -34,7 +34,7 @@
 1. 打开要改的文件，点 ✏️（Edit）。
 2. 改好后点 **Commit changes…**。
 3. GitHub 会建议"新建分支并发起 pull request"：保持这个选项，点 **Propose changes**，再点 **Create pull request**。
-4. 等自动检查出现**绿色的 ✓**（大约一分钟），点 **Squash and merge**。
+4. 等自动检查出现**绿色的 ✓**（通常几分钟），点 **Squash and merge**。
 
 详细的分步说明见 [docs/content-guide.md](docs/content-guide.md)，每个字段的含义见 [docs/data-model.md](docs/data-model.md)。
 

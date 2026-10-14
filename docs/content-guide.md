@@ -16,7 +16,7 @@
 3. 修改内容
 4. 点绿色的 **Commit changes…**，在弹出框里用一句话写明改了什么（如 "Add 2027/28 committee"）
 5. 本仓库的 `main` 分支有保护，所有修改都要经过一次自动检查。弹出框里会默认选中 **Create a new branch and start a pull request**，保持这个选项，点 **Propose changes**，再点 **Create pull request**
-6. 等页面上的自动检查变成**绿色 ✓**（大约一分钟），点 **Squash and merge** → **Confirm**。如果是红色 ✗，见第五节
+6. 等页面上的自动检查变成**绿色 ✓**（通常几分钟），点 **Squash and merge** → **Confirm**。如果是红色 ✗，见第五节
 
 > 用这个模板复制出来的新仓库默认没有这层保护，第 5、6 步可以省略，直接 Commit 就行。
 

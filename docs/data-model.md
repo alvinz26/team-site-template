@@ -47,7 +47,7 @@ content/
 | 字段 | 类型 | 必填 | 含义 | 示例 |
 |---|---|---|---|---|
 | `name` | 文本 | ✅ | 队伍全名。显示在首页大标题和浏览器标签页上 | `Northvale University Ultimate Frisbee Club` |
-| `shortName` | 文本 | ✅ | 简称。显示在导航栏，没有 logo 时代替 logo | `Northvale Ultimate` |
+| `shortName` | 文本 | ✅ | 简称。显示在导航栏和页脚（有 logo 时显示在 logo 旁边），也用来生成浏览器标签图标 | `Northvale Ultimate` |
 | `tagline` | 文本 | ✅ | 首页标题下的一句话标语 | `Fast feet, big hucks, better spirit.` |
 | `org` | 文本 | — | 所属学校或机构 | `Northvale University` |
 | `founded` | 整数（年份） | — | 成立年份。使用 `auto: seasons` 统计项时必填 | `2004` |
@@ -62,7 +62,7 @@ content/
 | `colors.primary` | 颜色 | ✅ | 主色：导航栏、标题 | `"#0f5c6e"` |
 | `colors.accent` | 颜色 | ✅ | 强调色：按钮、链接、高亮 | `"#f4b942"` |
 
-> Stage 4 会人工检查示例配色的对比度，并在填写指南里提醒怎么选颜色。系统不会自动检查。
+> 主色会用作白底上的链接和标题颜色，所以要足够深。主色和白色的对比度低于 4.5:1 时，构建日志里会出现提醒（D48），构建不会失败。按钮和导航上的文字颜色会自动在黑白之间选择对比度更高的那个。
 
 ### 1.3 联系方式
 
@@ -79,7 +79,7 @@ content/
 
 | 字段 | 类型 | 必填 | 含义 | 示例 |
 |---|---|---|---|---|
-| `hero.image` | 图片路径 | — | 首页顶部大图。不填时用主色色块 | `images/home/hero.svg` |
+| `hero.image` | 图片路径 | — | 首页顶部大图。不填时显示由主色和强调色生成的三角拼花图案。填了的话，分享链接时也会用它做预览图 | `images/home/hero.svg` |
 | `hero.alt` | 文本 | 填了 `hero.image` 就必填 | 用一句话描述图片内容，给读屏软件用 | `Players stretching out for a disc` |
 | `stats` | 列表 | — | 首页统计条，建议 2–4 项 | 见下 |
 | `stats[].label` | 文本 | ✅ | 数字下面的说明文字 | `Honours won` |
@@ -169,6 +169,9 @@ content/
 | `contact.none` | Contact details coming soon. |
 | `news.empty` | No news yet. |
 | `people.empty` | Coming soon. |
+| `notFound.title` | Page not found |
+| `notFound.text` | Sorry — that page doesn't exist. It may have moved, or the address may be mistyped. |
+| `notFound.home` | Go to the home page |
 
 写了不存在的键会报错，防止拼写错误。
 
@@ -205,7 +208,7 @@ content/
 | `result` | 代号 | ✅ | 必须是 `site.yaml → honours.results` 里的某个 `key` | `bronze` |
 | `tags` | 维度 → 选项 | — | 每个键必须是某个 facet 的 `key`，值必须是它的 `options` 之一。缺某个维度可以，但筛选该维度时这条不会出现 | `surface: Outdoor` |
 | `captains` | 名字列表 | — | 队长 | `[Oliver Grant]` |
-| `roster` | 名字列表 | — | 参赛名单。**排行榜根据它计算**，不填则这条不计入排行榜 | |
+| `roster` | 名字列表 | — | 参赛名单。**排行榜根据它和 `captains` 计算**（D12）；两者都不填，这条就不计入排行榜 | |
 | `photo` | 图片路径 | — | 合影。替代文字自动生成为 "{team} at {competition} {season}" | |
 | `links` | 列表 | — | 相关链接，新窗口打开 | |
 | `links[].label` | 文本 | ✅ | 链接文字 | `Match report` |
