@@ -1,0 +1,112 @@
+# =============================================================
+#  Site settings — the whole site reads from this file.
+#  Field reference: docs/data-model.md   Guide (中文): docs/content-guide.md
+#  Everything here is FICTIONAL example data. Replace it with your own.
+# =============================================================
+
+# ---------- Basic info ----------
+name: Northvale University Ultimate Frisbee Club   # full name, shown on the home page and in the browser tab
+shortName: Northvale Ultimate                      # short name, shown in the navigation bar
+tagline: Fast feet, big hucks, better spirit.      # one line under the name on the home page
+org: Northvale University                          # optional — school / organisation you belong to
+founded: 2004                                      # optional — year founded (a number, no quotes)
+description: >-
+  Northvale Ultimate is the university's frisbee club. We train three times a week,
+  welcome complete beginners, and send open, women's and mixed teams to student
+  competitions across the country.
+
+# ---------- Brand ----------
+logo: images/brand/logo.svg       # optional — leave out to show the short name as text instead
+colors:
+  primary: "#0f5c6e"              # main colour (nav bar, headings). Keep the quotes!
+  accent: "#f4b942"               # highlight colour (buttons, links). Keep the quotes!
+
+# ---------- Contact ----------
+email: hello@example.com          # optional — shown on the Contact page
+socials:                          # optional — icons in the footer and on the Contact page
+  - platform: instagram           # one of: instagram, facebook, x, tiktok, youtube, whatsapp, website
+    url: https://example.com/instagram
+  - platform: facebook
+    url: https://example.com/facebook
+  - platform: youtube
+    url: https://example.com/youtube
+  - platform: whatsapp
+    url: https://example.com/whatsapp
+
+# ---------- Home page ----------
+hero:                             # optional — the big picture at the top of the home page
+  image: images/home/hero.svg
+  alt: Players stretching out for a disc on a sunny pitch   # describe the picture for screen readers
+
+stats:                            # optional — the row of big numbers on the home page
+  - label: Founded
+    value: "2004"
+  - label: Honours won
+    auto: honours                 # counted automatically from honours.yaml
+  - label: Seasons played
+    auto: seasons                 # counted automatically (see docs/data-model.md)
+  - label: Members
+    value: 80+
+
+# ---------- Optional modules ----------
+modules:
+  honours: true                   # false = hide the Honours page and the honours parts of the home page
+  news: true                      # false = hide the News pages and the latest news on the home page
+
+# ---------- People page ----------
+people:
+  groups:                         # the sections of the People page, in display order
+    - key: committee
+      label: Committee
+    - key: captains
+      label: Captains
+    - key: coaches
+      label: Coaches
+
+# ---------- Honours page ----------
+honours:
+  facets:                         # filters on the Honours page. Every team can choose its own.
+    - key: level
+      label: Level
+      options:
+        - Nationals
+        - Regionals
+        - Tournament
+    - key: surface
+      label: Indoor / Outdoor
+      options:
+        - Indoor
+        - Outdoor
+        - Beach
+    - key: division
+      label: Division
+      options:
+        - Open
+        - Women's
+        - Mixed
+  results:                        # what a result can be. rank 1 = best.
+    - key: gold
+      label: Gold
+      emoji: "🥇"
+      rank: 1
+    - key: silver
+      label: Silver
+      emoji: "🥈"
+      rank: 2
+    - key: bronze
+      label: Bronze
+      emoji: "🥉"
+      rank: 3
+    - key: spirit
+      label: Spirit Award
+      emoji: "🕊️"
+      rank: 4
+  aliases:                        # optional — other spellings of the same person, merged on the leaderboard
+    Joshua Carter:
+      - Josh Carter
+
+# ---------- Interface text (optional) ----------
+# Leave this out to use the English defaults. Only list what you want to change.
+labels:
+  nav:
+    honours: Trophy Cabinet

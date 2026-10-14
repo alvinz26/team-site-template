@@ -1,0 +1,170 @@
+# =============================================================
+#  Honours — one block per result. Newest first is easiest to read, but order does not matter.
+#  `result` must be one of the keys in site.yaml → honours.results.
+#  Each `tags` value must be one of the options in site.yaml → honours.facets.
+#  `roster` feeds the player leaderboard: write each name the SAME way every time.
+#  Everything below is FICTIONAL.
+# =============================================================
+
+- season: 2026/27
+  competition: Northvale Classic
+  team: Mixed
+  result: silver
+  tags:
+    level: Tournament
+    surface: Outdoor
+    division: Mixed
+  captains:
+    - Chloe Bennett
+  roster:
+    - Chloe Bennett
+    - Joshua Carter
+    - Maya Okafor
+    - Liam Doherty
+    - Sofia Marchetti
+    - Ben Hartley
+    - Eilidh MacLeod
+
+- season: 2025/26
+  competition: Student Outdoor Nationals
+  team: Open Firsts
+  result: bronze
+  tags:
+    level: Nationals
+    surface: Outdoor
+    division: Open
+  captains:
+    - Oliver Grant
+  roster:
+    - Oliver Grant
+    - Daniel Osei
+    - Joshua Carter
+    - Tom Whitfield
+    - Rhys Morgan
+    - Marcus Lee
+    - Ethan Brooks
+  photo: images/honours/2025-26-outdoor-nationals.svg
+  links:
+    - label: Match report
+      url: https://example.com/reports/outdoor-nationals
+    - label: Photo album
+      url: https://example.com/albums/outdoor-nationals
+
+- season: 2025/26
+  competition: Northern Indoor Regionals
+  team: Women's Firsts
+  result: gold
+  tags:
+    level: Regionals
+    surface: Indoor
+    division: Women's
+  captains:
+    - Hannah Price
+  roster:
+    - Hannah Price
+    - Maya Okafor
+    - Sofia Marchetti
+    - Priya Raman
+    - Amira Haddad
+    - Isla Fraser
+    - Fatima Noor
+
+- season: 2025/26
+  competition: Student Indoor Nationals
+  team: Women's Firsts
+  result: spirit
+  tags:
+    level: Nationals
+    surface: Indoor
+    division: Women's
+  captains:
+    - Hannah Price
+  roster:
+    - Hannah Price
+    - Maya Okafor
+    - Sofia Marchetti
+    - Priya Raman
+    - Amira Haddad
+    - Fatima Noor
+
+- season: 2024/25
+  competition: Northern Indoor Regionals
+  team: Open Firsts
+  result: gold
+  tags:
+    level: Regionals
+    surface: Indoor
+    division: Open
+  captains:
+    - Oliver Grant
+  roster:
+    - Oliver Grant
+    - Josh Carter            # deliberate spelling variant of "Joshua Carter" — merged via site.yaml → honours.aliases
+    - Daniel Osei
+    - Rhys Morgan
+    - Marcus Lee
+    - Will Ashby
+  photo: images/honours/2024-25-indoor-regionals.svg
+
+- season: 2024/25
+  competition: Riverside Beach Cup
+  team: Mixed
+  result: gold
+  tags:
+    level: Tournament
+    surface: Beach
+    division: Mixed
+  roster:
+    - Maya Okafor
+    - Tom Whitfield
+    - Georgia Lane
+    - Sam Patel
+    - Zara Khan
+  links:
+    - label: Tournament page
+      url: https://example.com/beach-cup
+
+- season: 2023/24
+  competition: Student Indoor Nationals
+  team: Open Firsts
+  result: silver
+  tags:
+    level: Nationals
+    surface: Indoor
+    division: Open
+  captains:
+    - Sam Patel
+  roster:
+    - Sam Patel
+    - Oliver Grant
+    - Rhys Morgan
+    - Will Ashby
+    - Marcus Lee
+    - Ethan Brooks
+
+- season: 2023/24
+  competition: Northern Outdoor Regionals
+  team: Women's Firsts
+  result: bronze
+  tags:
+    level: Regionals
+    surface: Outdoor
+    division: Women's
+  captains:
+    - Grace Holloway
+  roster:
+    - Grace Holloway
+    - Georgia Lane
+    - Isla Frazer             # deliberate near-duplicate of "Isla Fraser" (NOT aliased) — used to test duplicate-name warnings
+    - Zara Khan
+    - Amira Haddad
+
+- season: 2022/23
+  competition: Northern Indoor Regionals
+  team: Mixed
+  result: silver
+  tags:
+    level: Regionals
+    surface: Indoor
+    division: Mixed
+  # no roster: an older result where the line-up was not recorded — allowed
