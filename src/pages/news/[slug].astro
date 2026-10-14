@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getNews, getSite } from '../../lib/content';
+import { formatDate } from '../../lib/format';
+import { url } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  return (await getNews()).map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { title, date, summary, cover } = post.data;
+const { Content } = await render(post);
+const { labels } = await getSite();
+---
+<BaseLayout title={title} description={summary}>
+  <article class="container">
+    <header class="page-title">
+      <p class="meta"><a href={url('news/')}>← {labels.nav.news}</a></p>
+      <h1>{title}</h1>
+      <time class="meta" datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
+    </header>
+    {cover && <Image class="article-cover" src={cover} alt="" widths={[800, 1600]} sizes="(min-width: 70rem) 70rem, 100vw" />}
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

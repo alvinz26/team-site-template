@@ -1,0 +1,44 @@
+---
+// Social links: open in a new window, safely (rel="noopener noreferrer"), with a readable name.
+import Icon from './Icon.astro';
+import type { Site } from '../lib/content';
+
+interface Props {
+  socials: NonNullable<Site['socials']>;
+  /** "icons" for the footer; "list" shows the platform name next to the icon. */
+  variant?: 'icons' | 'list';
+}
+const { socials, variant = 'icons' } = Astro.props;
+
+const NAMES = {
+  instagram: 'Instagram',
+  facebook: 'Facebook',
+  x: 'X',
+  tiktok: 'TikTok',
+  youtube: 'YouTube',
+  whatsapp: 'WhatsApp',
+  website: 'Website',
+} as const;
+---
+{
+  variant === 'icons' ? (
+    <div class="socials">
+      {socials.map((s) => (
+        <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={NAMES[s.platform]}>
+          <Icon name={s.platform} />
+        </a>
+      ))}
+    </div>
+  ) : (
+    <ul class="contact-list">
+      {socials.map((s) => (
+        <li>
+          <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={NAMES[s.platform]}>
+            <Icon name={s.platform} />
+            <span aria-hidden="true">{NAMES[s.platform]}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

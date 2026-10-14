@@ -27,11 +27,15 @@ async function storeData(ctx: LoaderContext, entries: Entry<Record<string, unkno
   }
 }
 
+/** Markdown body images are written ![alt](images/...) like everywhere else; Astro wants them relative to the .md file. */
+const bodyImagesFromEntryFile = (file: string, body: string) =>
+  body.replace(/(!\[[^\]]*\]\(\s*<?)(images\/[^)\s>]+)/g, (_, start: string, image: string) => start + fromEntryFile(file, image));
+
 async function storeMarkdown(ctx: LoaderContext, entries: MarkdownEntry<Record<string, unknown>>[]) {
   ctx.store.clear();
   for (const { id, file, data, body } of entries) {
     const parsed = await ctx.parseData({ id, data, filePath: file });
-    const rendered = await ctx.renderMarkdown(body, { fileURL: pathToFileURL(file) });
+    const rendered = await ctx.renderMarkdown(bodyImagesFromEntryFile(file, body), { fileURL: pathToFileURL(file) });
     ctx.store.set({
       id,
       data: parsed,
@@ -90,7 +94,7 @@ const news = defineCollection({
 });
 
 const pages = defineCollection({
-  loader: contentLoader('pages', (ctx, { about }) => storeMarkdown(ctx, [about])),
+  loader: contentLoader('pages', (ctx, { about, join }) => storeMarkdown(ctx, join ? [about, join] : [about])),
   schema: pageSchema,
 });
 

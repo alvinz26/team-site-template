@@ -1,24 +1,103 @@
 ---
-// Stage 1: a deliberately empty home page that proves content, images and the base path work.
-// The real layout and pages arrive in Stage 2.
+// Home (D31): hero + stats → join → latest news → [honours: Stage 3] → committee preview.
 import { Image } from 'astro:assets';
-import { getSite } from '../lib/content';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsCard from '../components/NewsCard.astro';
+import PersonCard from '../components/PersonCard.astro';
+import TrianglePattern from '../components/TrianglePattern.astro';
+import { getCurrentPeople, getNews, getPage, getSite } from '../lib/content';
+import { url } from '../lib/paths';
 
 const site = await getSite();
+const { labels } = site;
+const join = await getPage('join');
+const JoinContent = join ? (await render(join)).Content : undefined;
+const news = (await getNews()).slice(0, 3);
+const firstGroup = (await getCurrentPeople())[0];
+
+// Automatic stats ("auto:") are calculated in Stage 3 (D37); until then only written values show.
+const stats = (site.stats ?? []).filter((s): s is { label: string; value: string } => 'value' in s);
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{site.name}</title>
-    <meta name="description" content={site.description} />
-  </head>
-  <body>
-    <main>
-      {site.logo && <Image src={site.logo} alt={site.name} width={120} height={120} />}
+<BaseLayout>
+  <section class="hero">
+    <div class="hero__bg">
+      {
+        site.hero ? (
+          <Image src={site.hero.image} alt={site.hero.alt} widths={[800, 1600, 2400]} sizes="100vw" loading="eager" />
+        ) : (
+          <TrianglePattern primary={site.colors.primary} accent={site.colors.accent} />
+        )
+      }
+    </div>
+    <div class="container hero__content">
       <h1>{site.name}</h1>
-      <p>{site.tagline}</p>
-    </main>
-  </body>
-</html>
+      <p class="hero__tagline">{site.tagline}</p>
+      <p class="hero__description">{site.description}</p>
+      <div class="hero__actions">
+        <a class="btn btn--light" href={join ? '#join' : url('contact/')}>{labels.home.joinButton}</a>
+        <a class="btn btn--outline" href={url('about/')}>{labels.home.aboutButton}</a>
+      </div>
+    </div>
+  </section>
+
+  {
+    stats.length > 0 && (
+      <div class="stats" data-section="stats">
+        <ul class="container">
+          {stats.map((s) => (
+            <li>
+              <strong>{s.value}</strong>
+              <span>{s.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    JoinContent && (
+      <section class="section" id="join" aria-labelledby="join-title">
+        <div class="container">
+          <div class="join prose">
+            <h2 id="join-title">{labels.home.joinTitle}</h2>
+            <JoinContent />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    news.length > 0 && (
+      <section class="section section--tint" data-section="news" aria-labelledby="news-title">
+        <div class="container">
+          <div class="section-head">
+            <h2 id="news-title">{labels.home.newsTitle}</h2>
+            <a class="more-link" href={url('news/')}>{labels.home.allNews}</a>
+          </div>
+          <div class="grid">
+            {news.map((post) => <NewsCard post={post} />)}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    firstGroup && (
+      <section class="section" data-section="committee" aria-labelledby="committee-title">
+        <div class="container">
+          <div class="section-head">
+            <h2 id="committee-title">{firstGroup.label}</h2>
+            <a class="more-link" href={url('people/')}>{labels.home.seeEveryone}</a>
+          </div>
+          <div class="grid grid--people">
+            {firstGroup.people.slice(0, 4).map((person) => <PersonCard person={person} showBio={false} />)}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

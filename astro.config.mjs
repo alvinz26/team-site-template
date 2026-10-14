@@ -20,4 +20,6 @@ function githubPages() {
 
 export default defineConfig({
   ...githubPages(),
+  // Test builds write to .test-work/; a running `astro dev` must not react to them.
+  vite: { server: { watch: { ignored: ['**/.test-work/**'] } } },
 });

@@ -1,0 +1,110 @@
+---
+// Shared page shell: theme colours, notice, header + navigation, footer.
+import { Image } from 'astro:assets';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { getSite } from '../lib/content';
+import { isCurrent, url } from '../lib/paths';
+import { themeCss } from '../lib/theme';
+
+interface Props {
+  /** Page title; the home page leaves it out and uses the club name. */
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const site = await getSite();
+const { labels, modules } = site;
+
+// Navigation follows the module switches (D31). Honours joins in Stage 3.
+const nav = [
+  { path: '', label: labels.nav.home },
+  { path: 'about/', label: labels.nav.about },
+  { path: 'people/', label: labels.nav.people },
+  ...(modules.news ? [{ path: 'news/', label: labels.nav.news }] : []),
+  { path: 'contact/', label: labels.nav.contact },
+];
+const pageTitle = title ? `${title} | ${site.shortName}` : site.name;
+const year = new Date().getFullYear(); // D36: build year
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description ?? site.description} />
+    <style set:html={themeCss(site.colors)}></style>
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{labels.common.skipToContent}</a>
+    {site.notice && <div class="notice" role="note" data-notice>{site.notice}</div>}
+
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href={url()}>
+          {site.logo && <Image src={site.logo} alt="" height={80} />}
+          <span>{site.shortName}</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+          <Icon name="menu" />
+          {labels.common.menu}
+        </button>
+        <nav class="site-menu" id="site-menu" aria-label="Main">
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={url(item.path)} aria-current={isCurrent(Astro.url.pathname, item.path) ? 'page' : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="brand" href={url()}>
+              {site.logo && <Image src={site.logo} alt="" height={80} />}
+              <span>{site.shortName}</span>
+            </a>
+            <p class="footer-org">{[site.org, site.tagline].filter(Boolean).join(' · ')}</p>
+            {site.socials && site.socials.length > 0 && <SocialLinks socials={site.socials} />}
+            {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+          </div>
+          <nav aria-label="Footer">
+            <ul>
+              {nav.slice(1).map((item) => <li><a href={url(item.path)}>{item.label}</a></li>)}
+            </ul>
+          </nav>
+        </div>
+        <p class="copyright">© {year} {site.name}</p>
+      </div>
+    </footer>
+
+    <script is:inline>
+      (() => {
+        const button = document.querySelector('.menu-toggle');
+        const menu = button && document.getElementById(button.getAttribute('aria-controls'));
+        if (!menu) return;
+        button.addEventListener('click', () => {
+          const open = button.getAttribute('aria-expanded') !== 'true';
+          button.setAttribute('aria-expanded', String(open));
+          menu.classList.toggle('is-open', open);
+        });
+      })();
+    </script>
+  </body>
+</html>

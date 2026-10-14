@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { formatDate } from '../lib/format';
+import { url } from '../lib/paths';
+
+interface Props {
+  post: CollectionEntry<'news'>;
+}
+const { post } = Astro.props;
+const { title, date, summary, cover } = post.data;
+---
+<a class="card" href={url(`news/${post.id}/`)}>
+  {
+    cover ? (
+      <Image class="card__media" src={cover} alt="" widths={[400, 800]} sizes="(min-width: 48rem) 33vw, 100vw" />
+    ) : (
+      <div class="card__media placeholder" data-placeholder>
+        <Icon name="photo" />
+      </div>
+    )
+  }
+  <div class="card__body">
+    <time class="meta" datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
+    <h3>{title}</h3>
+    <p>{summary}</p>
+  </div>
+</a>

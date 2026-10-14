@@ -1,0 +1,40 @@
+---
+// Low-poly triangle mosaic (D30), inspired by the Durham logo but generated from the
+// team's own colours, so every team gets a matching pattern. Deterministic: the same
+// colours always produce the same picture.
+import { mix } from '../lib/theme';
+
+interface Props {
+  primary: string;
+  accent: string;
+}
+const { primary, accent } = Astro.props;
+
+const W = 1200;
+const H = 600;
+const COLS = 12;
+const ROWS = 5;
+const cw = W / COLS;
+const rh = H / ROWS;
+
+// Small fixed sequence instead of Math.random(), so builds are reproducible.
+const shades = [0, 0.3, 0.12, 0.55, 0.2, 0.7, 0.06, 0.4, 0.62, 0.25, 0.48, 0.1];
+const fill = (n: number) => mix(primary, accent, shades[n % shades.length]);
+
+// Scatter the shades with a simple hash of the cell position (avoids visible stripes).
+const shadeAt = (r: number, c: number, half: number) => (r * 7 + (c + 2) * 5 + half * 11 + r * c) % shades.length;
+
+const triangles: { points: string; fill: string }[] = [];
+for (let r = 0; r < ROWS; r++) {
+  for (let c = -1; c <= COLS; c++) {
+    const x = c * cw + (r % 2 ? cw / 2 : 0);
+    const [y0, y1] = [r * rh, (r + 1) * rh];
+    triangles.push({ points: `${x},${y1} ${x + cw / 2},${y0} ${x + cw},${y1}`, fill: fill(shadeAt(r, c, 0)) });
+    triangles.push({ points: `${x + cw / 2},${y0} ${x + cw},${y1} ${x + cw * 1.5},${y0}`, fill: fill(shadeAt(r, c, 1)) });
+  }
+}
+---
+<svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <rect width={W} height={H} fill={primary} />
+  {triangles.map((t) => <polygon points={t.points} fill={t.fill} />)}
+</svg>

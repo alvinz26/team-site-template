@@ -1,0 +1,43 @@
+---
+// Contact: email and social links only — no form (SPEC: no form submission).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { getSite } from '../lib/content';
+
+const site = await getSite();
+const { labels } = site;
+const socials = site.socials ?? [];
+const title = labels.nav.contact;
+---
+<BaseLayout title={title}>
+  <div class="container">
+    <header class="page-title"><h1>{title}</h1></header>
+    <div class="section">
+      {
+        site.email && (
+          <>
+            <h2>{labels.contact.email}</h2>
+            <ul class="contact-list">
+              <li>
+                <a href={`mailto:${site.email}`}>
+                  <Icon name="mail" />
+                  {site.email}
+                </a>
+              </li>
+            </ul>
+          </>
+        )
+      }
+      {
+        socials.length > 0 && (
+          <>
+            <h2>{labels.contact.socials}</h2>
+            <SocialLinks socials={socials} variant="list" />
+          </>
+        )
+      }
+      {!site.email && socials.length === 0 && <p>{labels.contact.none}</p>}
+    </div>
+  </div>
+</BaseLayout>

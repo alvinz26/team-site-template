@@ -1,0 +1,24 @@
+---
+// The news list at /news/. A rest route instead of index.astro so the page is not
+// generated at all when the news module is off (D31, test S4).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { getNews, getSite } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return site.modules.news ? [{ params: { list: undefined } }] : [];
+}
+
+const site = await getSite();
+const news = await getNews();
+const title = site.labels.nav.news;
+---
+<BaseLayout title={title}>
+  <div class="container">
+    <header class="page-title"><h1>{title}</h1></header>
+    <div class="section">
+      {news.length > 0 ? <div class="grid">{news.map((post) => <NewsCard post={post} />)}</div> : <p>{site.labels.news.empty}</p>}
+    </div>
+  </div>
+</BaseLayout>

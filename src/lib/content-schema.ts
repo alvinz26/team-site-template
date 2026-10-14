@@ -7,6 +7,7 @@
 // are checked in content-validate.ts, so here those fields are plain strings.
 
 import { z } from 'astro/zod';
+import { DEFAULT_LABELS } from './labels';
 
 type ImageField = z.ZodType<unknown, unknown>;
 
@@ -28,19 +29,15 @@ export const season = z
 /** First 4-digit year in a season string, used for sorting and "latest season". */
 export const seasonYear = (s: string) => Number(s.match(/\d{4}/)?.[0] ?? 0);
 
-/** Interface text overrides. Every key is optional; defaults live in content.ts. */
-export const labelsSchema = z.strictObject({
-  nav: z
-    .strictObject({
-      home: text.optional(),
-      about: text.optional(),
-      people: text.optional(),
-      honours: text.optional(),
-      news: text.optional(),
-      contact: text.optional(),
-    })
-    .optional(),
-});
+/** Interface text overrides, generated from DEFAULT_LABELS: every key optional, unknown keys rejected. */
+export const labelsSchema = z.strictObject(
+  Object.fromEntries(
+    Object.entries(DEFAULT_LABELS).map(([section, keys]) => [
+      section,
+      z.strictObject(Object.fromEntries(Object.keys(keys).map((k) => [k, text.optional()]))).optional(),
+    ]),
+  ) as { [S in keyof typeof DEFAULT_LABELS]: z.ZodOptional<z.ZodObject<{ [K in keyof (typeof DEFAULT_LABELS)[S]]: z.ZodOptional<z.ZodString> }>> },
+);
 
 export const siteSchema = <I extends ImageField>(img: I) =>
   z.strictObject({
@@ -50,6 +47,7 @@ export const siteSchema = <I extends ImageField>(img: I) =>
     org: text.optional(),
     founded: z.number().int().min(1800).max(2200).optional(),
     description: text,
+    notice: text.optional(),
     logo: img.optional(),
     colors: z.strictObject({ primary: hexColour, accent: hexColour }),
     email: z.email('must be an email address like hello@example.com').optional(),

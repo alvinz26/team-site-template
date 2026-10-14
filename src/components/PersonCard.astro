@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import type { Person } from '../lib/content';
+
+interface Props {
+  person: Person;
+  showBio?: boolean;
+}
+const { person, showBio = true } = Astro.props;
+const initials = person.name
+  .split(/\s+/)
+  .map((w) => w[0])
+  .slice(0, 2)
+  .join('')
+  .toUpperCase();
+---
+<article class="person" data-person={person.name}>
+  {
+    person.photo ? (
+      <Image class="person__photo" src={person.photo} alt={person.name} width={224} height={224} />
+    ) : (
+      <div class="person__photo placeholder" data-placeholder aria-hidden="true">{initials}</div>
+    )
+  }
+  <h3>{person.name}</h3>
+  <p class="person__role">{person.role}</p>
+  {showBio && person.bio && <p class="person__bio">{person.bio}</p>}
+</article>

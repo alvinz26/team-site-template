@@ -40,6 +40,8 @@ export interface ValidContent {
   honours: Entry<Honour>[];
   news: MarkdownEntry<NewsData>[];
   about: MarkdownEntry<Record<string, never>>;
+  /** Optional home-page "join us" text (D32). */
+  join?: MarkdownEntry<Record<string, never>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -233,13 +235,13 @@ function check<S extends z.ZodType>(
   return undefined;
 }
 
-/** Make ids unique while keeping them readable: "2026/27 · Maya Okafor", then "… (2)". */
-function uniqueId(base: string, used: Set<string>): string {
-  let id = base;
-  for (let n = 2; used.has(id); n++) id = `${base} (${n})`;
-  used.add(id);
-  return id;
-}
+/**
+ * Entry id for the content store: "0001 · 2026/27 · Maya Okafor".
+ * Astro returns collections sorted by id, so the zero-padded position keeps file order
+ * (which decides the order on the page) and makes every id unique. Error messages use
+ * the readable label without the number (D7).
+ */
+const entryId = (position: number, label: string) => `${String(position + 1).padStart(4, '0')} · ${label}`;
 
 function loadSite(problems: Problem[]): Site | undefined {
   const abs = path.join(CONTENT_DIR, 'site.yaml');
@@ -284,7 +286,6 @@ function loadList<T>(
     problems.push({ file: rel(abs), message: 'should be a list: every entry starts with "- " at the beginning of a line.' });
     return [];
   }
-  const used = new Set<string>();
   const out: Entry<T>[] = [];
   list.forEach((raw, i) => {
     const line = itemLine(parsed, i);
@@ -294,7 +295,7 @@ function loadList<T>(
     if (!data) return;
     const crossProblems = crossCheck(data);
     for (const p of crossProblems) problems.push({ ...where, ...p });
-    if (crossProblems.length === 0) out.push({ id: uniqueId(label(raw, i), used), file: abs, data });
+    if (crossProblems.length === 0) out.push({ id: entryId(i, label(raw, i)), file: abs, data });
   });
   return out;
 }
@@ -354,8 +355,17 @@ function loadHonours(site: Site | undefined, problems: Problem[]): Entry<Honour>
 export const slugify = (fileName: string) =>
   fileName.replace(/\.md$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
+/** Images in a Markdown body, written ![alt](images/...), must exist (same rules as image fields). */
+function checkBodyImages(abs: string, body: string, problems: Problem[]) {
+  for (const m of body.matchAll(/!\[[^\]]*\]\(\s*<?([^)\s>]+)/g)) {
+    const res = localImage.safeParse(m[1]); // web addresses are rejected too (constraint 5, D16)
+    if (!res.success) for (const issue of res.error.issues) problems.push({ file: rel(abs), field: 'image in text', message: `${issue.message}.` });
+  }
+}
+
 function loadMarkdown<T>(abs: string, schema: z.ZodType<T>, problems: Problem[]): { data: T; body: string } | undefined {
   const { frontmatter, body } = splitFrontmatter(readText(abs));
+  checkBodyImages(abs, body, problems);
   const parsed = parseYaml(abs, frontmatter, problems, 1);
   if (!parsed) return undefined;
   const data = check(schema, parsed.value ?? {}, { file: rel(abs) }, problems);
@@ -381,14 +391,16 @@ function loadNews(site: Site | undefined, problems: Problem[]): MarkdownEntry<Ne
   return out;
 }
 
-function loadAbout(problems: Problem[]): MarkdownEntry<Record<string, never>> | undefined {
-  const abs = path.join(CONTENT_DIR, 'pages', 'about.md');
+/** A free-Markdown page in content/pages/. Required pages report a problem when missing. */
+function loadPage(id: string, required: boolean, problems: Problem[]): MarkdownEntry<Record<string, never>> | undefined {
+  const abs = path.join(CONTENT_DIR, 'pages', `${id}.md`);
   if (!fs.existsSync(abs)) {
-    problems.push({ file: rel(abs), message: 'file not found. The About page needs this file (it can be short).' });
+    if (required) problems.push({ file: rel(abs), message: 'file not found. This page needs the file (it can be short).' });
     return undefined;
   }
   const { body } = splitFrontmatter(readText(abs));
-  return { id: 'about', file: abs, data: {}, body };
+  checkBodyImages(abs, body, problems);
+  return { id, file: abs, data: {}, body };
 }
 
 function loadPeopleFile(site: Site | undefined, problems: Problem[]): Entry<Person>[] {
@@ -410,9 +422,10 @@ export function loadContent(): ValidContent {
   const people = loadPeopleFile(site, problems);
   const honours = loadHonours(site, problems);
   const news = loadNews(site, problems);
-  const about = loadAbout(problems);
+  const about = loadPage('about', true, problems);
+  const join = loadPage('join', false, problems);
   if (problems.length > 0 || !site || !about) throw new ContentError(problems);
-  return { site, people, honours, news, about };
+  return { site, people, honours, news, about, join };
 }
 
 export { seasonYear };

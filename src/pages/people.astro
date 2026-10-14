@@ -1,0 +1,29 @@
+---
+// People: newest season only, one section per group in site.yaml order (D8).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PersonCard from '../components/PersonCard.astro';
+import { getCurrentPeople, getSite } from '../lib/content';
+
+const site = await getSite();
+const groups = await getCurrentPeople();
+const title = site.labels.nav.people;
+const season = groups[0]?.people[0]?.season;
+---
+<BaseLayout title={title}>
+  <div class="container">
+    <header class="page-title">
+      <h1>{title}</h1>
+      {season && <p class="meta">{season}</p>}
+    </header>
+    {
+      groups.map((group) => (
+        <section class="group section" data-group={group.key} aria-labelledby={`group-${group.key}`}>
+          <h2 id={`group-${group.key}`}>{group.label}</h2>
+          <div class="grid grid--people">
+            {group.people.map((person) => <PersonCard person={person} />)}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
