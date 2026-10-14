@@ -14,12 +14,16 @@
 1. 在仓库页面点进 `content/`，再点开要改的文件，比如 `people.yaml`
 2. 点右上角的 ✏️（Edit this file）
 3. 修改内容
-4. 点绿色的 **Commit changes…**，在弹出框里用一句话写明改了什么（如 "Add 2027/28 committee"），再点 **Commit changes**
+4. 点绿色的 **Commit changes…**，在弹出框里用一句话写明改了什么（如 "Add 2027/28 committee"）
+5. 本仓库的 `main` 分支有保护，所有修改都要经过一次自动检查。弹出框里会默认选中 **Create a new branch and start a pull request**，保持这个选项，点 **Propose changes**，再点 **Create pull request**
+6. 等页面上的自动检查变成**绿色 ✓**（大约一分钟），点 **Squash and merge** → **Confirm**。如果是红色 ✗，见第五节
+
+> 用这个模板复制出来的新仓库默认没有这层保护，第 5、6 步可以省略，直接 Commit 就行。
 
 **上传图片：**
 1. 进入对应的图片文件夹，比如 `content/images/people/`
 2. 点 **Add file → Upload files**，把图片拖进去
-3. 点 **Commit changes**
+3. 点 **Commit changes**（同样按上面第 5、6 步走 pull request）
 4. 回到对应的文件（如 `people.yaml`），把图片路径填进去
 
 **多久能看到更新：** 提交后大约 **1–3 分钟**。在仓库页面顶部点 **Actions**，能看到正在运行的 "Deploy to GitHub Pages"：黄色圆圈表示正在发布，绿色 ✓ 表示已经上线（如果没变化，刷新网页试试），红色 ✗ 表示内容有错、网站没有更新（见第五节）。
