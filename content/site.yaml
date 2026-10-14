@@ -2,57 +2,52 @@
 #  Site settings — the whole site reads from this file.
 #  Field reference: docs/data-model.md   Guide (中文): docs/content-guide.md
 #
-#  PREVIEW CONTENT: Durham branding with obvious placeholders (DECISIONS.md D28).
-#  Every name, number and result below is a placeholder, not real club data.
+#  Durham University Ultimate Frisbee Club — real public information, used with the
+#  club's permission (DECISIONS.md D41). Sources: the Team Durham Ultimate Frisbee page,
+#  the club's Instagram and Linktree. Unconfirmed details are left out for now.
 # =============================================================
 
 # ---------- Basic info ----------
-name: Durham University Ultimate Frisbee Club    # full name, shown on the home page and in the browser tab
-shortName: Durham Ultimate                       # short name, shown in the navigation bar
-tagline: Placeholder tagline — one short line about the club.
-org: Durham University                           # optional — school / organisation you belong to
-# founded: 2000                                  # optional — year founded (needed for "auto: seasons")
+name: Durham University Ultimate Frisbee Club
+shortName: DUF
+tagline: Mixed-gender, mixed-ability — everyone welcome.
+org: Durham University · Team Durham
+# founded:                       # unknown for now — add the year when confirmed
 description: >-
-  Placeholder description. Replace this with two or three sentences about the club:
-  who you are, how often you train, and that beginners are welcome.
+  Durham Ultimate Frisbee (DUF) is one of the highest-performing university teams in the
+  country, qualifying for every National Championship in the 2024–25 season. Most of our
+  players had never heard of ultimate before arriving — and everyone is welcome.
 
 # ---------- Site-wide notice (optional) ----------
-# A banner shown at the top of every page. Delete the line to remove it.
-notice: Preview — this is not the official Durham Ultimate website. All names, results and news are placeholders.
+notice: This website is under development — some information may be incomplete.
 
 # ---------- Brand ----------
-logo: images/brand/logo.svg       # optional — leave out to show the short name as text instead
+# logo: images/brand/logo.png    # add the club logo file here when available
 colors:
-  primary: "#3d1240"              # main colour (nav bar, headings). Keep the quotes!
-  accent: "#8a2f8a"               # highlight colour (buttons, links). Keep the quotes!
+  primary: "#3d1240"              # deep purple from the club logo. Keep the quotes!
+  accent: "#8a2f8a"               # brighter purple from the club logo. Keep the quotes!
 
 # ---------- Contact ----------
-email: hello@example.com          # optional — shown on the Contact page
-socials:                          # optional — icons in the footer and on the Contact page
-  - platform: instagram           # one of: instagram, facebook, x, tiktok, youtube, whatsapp, website
-    url: https://example.com/instagram
+# email:                          # no public email yet
+socials:
+  - platform: instagram
+    url: https://www.instagram.com/durhamultimatefrisbee/
   - platform: facebook
-    url: https://example.com/facebook
-  - platform: tiktok
-    url: https://example.com/tiktok
+    url: https://www.facebook.com/groups/durhamultimatefrisbee/
 
 # ---------- Home page ----------
 # hero:                           # optional — the big picture at the top of the home page
 #   image: images/home/hero.jpg
 #   alt: Describe the picture for screen readers
 
-stats:                            # optional — the row of numbers under the top of the home page
-  - label: Founded
-    value: TBC
-  - label: Members
-    value: TBC
-  - label: Teams
-    value: TBC
+# stats:                          # optional — add numbers when confirmed, e.g.
+#   - label: Founded
+#     value: "2000"
 
 # ---------- Optional modules ----------
 modules:
-  honours: true                   # false = hide the Honours page and the honours parts of the home page
-  news: true                      # false = hide the News pages and the latest news on the home page
+  honours: true
+  news: true
 
 # ---------- People page ----------
 people:
@@ -66,12 +61,13 @@ people:
 
 # ---------- Honours page ----------
 honours:
-  facets:                         # filters on the Honours page
+  facets:
     - key: level
       label: Level
       options:
         - Nationals
         - Regionals
+        - League
         - Tournament
     - key: surface
       label: Indoor / Outdoor
@@ -82,10 +78,10 @@ honours:
     - key: division
       label: Division
       options:
-        - Open
+        - Men's
         - Women's
         - Mixed
-  results:                        # what a result can be. rank 1 = best.
+  results:
     - key: gold
       label: Gold
       emoji: "🥇"
@@ -102,12 +98,3 @@ honours:
       label: Spirit Award
       emoji: "🕊️"
       rank: 4
-  # aliases:                      # optional — other spellings of the same person, merged on the leaderboard
-  #   Joshua Smith:
-  #     - Josh Smith
-
-# ---------- Interface text (optional) ----------
-# Leave this out to use the English defaults. Only list what you want to change.
-# labels:
-#   nav:
-#     news: Latest news
