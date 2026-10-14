@@ -65,6 +65,13 @@ it is publishing, a green ✓ means it is live (refresh the page), a red ✗ mea
 
 Different sports work too: the honours filters and medal types are set in `site.yaml`, and the honours or news sections can be switched off.
 
+## Author and licence
+
+Designed and built by **Tao** ([@alvinz26](https://github.com/alvinz26)): requirements, architecture,
+design decisions and delivery. Club members maintain the content.
+
+Released under the [MIT licence](LICENSE): you may use and adapt it, provided the copyright notice is kept.
+
 ## For developers
 
 ```bash
