@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Placeholder: Outdoor Nationals">
+  <rect width="1200" height="800" fill="#f4b942"/>
+  <circle cx="1020" cy="160" r="96" fill="#0f5c6e" opacity="0.25"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif" font-size="133" font-weight="700" fill="#0f5c6e">Outdoor Nationals</text>
+  <text x="50%" y="533" text-anchor="middle" font-family="system-ui, sans-serif" font-size="44" fill="#0f5c6e" opacity="0.8">placeholder team photo</text>
+</svg>

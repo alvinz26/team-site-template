@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="Placeholder: SM">
+  <rect width="400" height="400" fill="#d9e7ea"/>
+  <circle cx="340" cy="80" r="48" fill="#0f5c6e" opacity="0.25"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif" font-size="67" font-weight="700" fill="#0f5c6e">SM</text>
+  <text x="50%" y="267" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22" fill="#0f5c6e" opacity="0.8">placeholder photo</text>
+</svg>
