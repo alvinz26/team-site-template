@@ -16,6 +16,7 @@ import { LineCounter, parseDocument, isSeq, type Document } from 'yaml';
 import { z } from 'astro/zod';
 import { honourSchema, newsSchema, personSchema, seasonYear, siteSchema } from './content-schema';
 import { aliasMap, participants, similarNames } from './honours-logic';
+import { contrast } from './theme';
 
 /** Where content lives. CONTENT_DIR exists only so tests can point at a scratch copy (D23). */
 export const CONTENT_DIR = path.resolve(process.env.CONTENT_DIR ?? 'content');
@@ -43,7 +44,7 @@ export interface ValidContent {
   about: MarkdownEntry<Record<string, never>>;
   /** Optional home-page "join us" text (D32). */
   join?: MarkdownEntry<Record<string, never>>;
-  /** Non-fatal notes for the build log, e.g. possible duplicate names (D14). */
+  /** Non-fatal notes for the build log: low colour contrast, possible duplicate names (D14). */
   warnings: string[];
 }
 
@@ -428,7 +429,17 @@ export function loadContent(): ValidContent {
   const about = loadPage('about', true, problems);
   const join = loadPage('join', false, problems);
   if (problems.length > 0 || !site || !about) throw new ContentError(problems);
-  return { site, people, honours, news, about, join, warnings: duplicateNameWarnings(site, honours) };
+  return { site, people, honours, news, about, join, warnings: [...contrastWarnings(site), ...duplicateNameWarnings(site, honours)] };
+}
+
+/** Links and headings use the primary colour on white, so it must be dark enough to read (WCAG AA). */
+function contrastWarnings(site: Site): string[] {
+  const ratio = contrast(site.colors.primary, '#ffffff');
+  if (ratio >= 4.5) return [];
+  return [
+    `site.yaml: colors.primary "${site.colors.primary}" has a contrast of only ${ratio.toFixed(1)}:1 against white. ` +
+      'Links and headings use this colour and need at least 4.5:1 to be easy to read — pick a darker shade.',
+  ];
 }
 
 /** D14: spellings that look like one person are reported (not fatal), with the alias to add. */

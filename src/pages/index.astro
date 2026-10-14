@@ -21,7 +21,7 @@ const medals = await getMedalSummary();
 const firstGroup = (await getCurrentPeople())[0];
 const stats = await getStats();
 ---
-<BaseLayout>
+<BaseLayout shareImage={site.hero?.image}>
   <section class="hero">
     <div class="hero__bg">
       {

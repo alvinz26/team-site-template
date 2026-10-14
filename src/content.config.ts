@@ -60,7 +60,8 @@ function contentLoader(name: string, load: (ctx: LoaderContext, content: ValidCo
 }
 
 const site = defineCollection({
-  loader: contentLoader('site', (ctx, { site }) => {
+  loader: contentLoader('site', (ctx, { site, warnings }) => {
+    for (const w of warnings) ctx.logger.warn(w); // logged once, here: every site has this collection
     const file = path.join(CONTENT_DIR, 'site.yaml');
     const data = {
       ...site,
@@ -80,10 +81,9 @@ const people = defineCollection({
 });
 
 const honours = defineCollection({
-  loader: contentLoader('honours', (ctx, { honours, warnings }) => {
-    for (const w of warnings) ctx.logger.warn(w); // logged once, here, rather than by every collection
-    return storeData(ctx, honours.map((e) => ({ ...e, data: { ...e.data, photo: fromEntryFile(e.file, e.data.photo) } })));
-  }),
+  loader: contentLoader('honours', (ctx, { honours }) =>
+    storeData(ctx, honours.map((e) => ({ ...e, data: { ...e.data, photo: fromEntryFile(e.file, e.data.photo) } }))),
+  ),
   schema: ({ image }) => honourSchema(image()),
 });
 

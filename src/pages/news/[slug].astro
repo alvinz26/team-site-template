@@ -15,7 +15,7 @@ const { title, date, summary, cover } = post.data;
 const { Content } = await render(post);
 const { labels } = await getSite();
 ---
-<BaseLayout title={title} description={summary}>
+<BaseLayout title={title} description={summary} shareImage={cover}>
   <article class="container">
     <header class="page-title">
       <p class="meta"><a href={url('news/')}>← {labels.nav.news}</a></p>

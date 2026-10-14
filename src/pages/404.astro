@@ -1,0 +1,17 @@
+---
+// GitHub Pages serves this for any address that doesn't exist (D48).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSite } from '../lib/content';
+import { url } from '../lib/paths';
+
+const { labels } = await getSite();
+---
+<BaseLayout title={labels.notFound.title}>
+  <div class="container">
+    <header class="page-title"><h1>{labels.notFound.title}</h1></header>
+    <div class="section">
+      <p>{labels.notFound.text}</p>
+      <p><a class="btn btn--accent" href={url()}>{labels.notFound.home}</a></p>
+    </div>
+  </div>
+</BaseLayout>

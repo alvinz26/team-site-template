@@ -64,8 +64,10 @@ a:hover {
   color: var(--color-accent);
 }
 
+/* currentColor keeps the focus ring visible on both white pages and the coloured header/footer,
+   whatever the team's colours (a light accent would vanish on white). */
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid currentColor;
   outline-offset: 2px;
 }
 
@@ -363,6 +365,15 @@ h3 {
 .hero h1 {
   color: #ffffff;
   max-width: 18ch;
+  /* Smaller on phones so the club name doesn't push everything below the fold (D48). */
+  font-size: clamp(1.55rem, 4.5vw + 0.6rem, 3.2rem);
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 48rem) {
+  .hero h1 {
+    letter-spacing: 0.06em;
+  }
 }
 
 .hero__tagline {

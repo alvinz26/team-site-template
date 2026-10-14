@@ -1,6 +1,7 @@
 ---
-// Shared page shell: theme colours, notice, header + navigation, footer.
-import { Image } from 'astro:assets';
+// Shared page shell: theme colours, favicon, share-preview tags, notice, header + navigation, footer.
+import type { ImageMetadata } from 'astro';
+import { getImage, Image } from 'astro:assets';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import SocialLinks from '../components/SocialLinks.astro';
@@ -12,8 +13,10 @@ interface Props {
   /** Page title; the home page leaves it out and uses the club name. */
   title?: string;
   description?: string;
+  /** Picture shown when the page is shared (WhatsApp, Instagram, Facebook…). */
+  shareImage?: ImageMetadata;
 }
-const { title, description } = Astro.props;
+const { title, description, shareImage } = Astro.props;
 const site = await getSite();
 const { labels, modules } = site;
 
@@ -27,7 +30,22 @@ const nav = [
   { path: 'contact/', label: labels.nav.contact },
 ];
 const pageTitle = title ? `${title} | ${site.shortName}` : site.name;
+const pageDescription = description ?? site.description;
 const year = new Date().getFullYear(); // D36: build year
+
+// Astro 7 does not rasterise SVGs by default, so SVG sources are passed through unchanged.
+const formatFor = (img: ImageMetadata, raster: 'png' | 'jpg') => (img.format === 'svg' ? 'svg' : raster);
+
+// Favicon: the logo when there is one, otherwise an icon generated from the colours (D48).
+const favicon = site.logo
+  ? (await getImage({ src: site.logo, width: 64, format: formatFor(site.logo, 'png') })).src
+  : url('favicon.svg');
+
+// Share previews need absolute URLs, which exist only when the site address is known (GitHub builds).
+const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href : undefined);
+const pageUrl = absolute(Astro.url.pathname);
+const shareImageUrl =
+  shareImage && absolute((await getImage({ src: shareImage, width: 1200, format: formatFor(shareImage, 'jpg') })).src);
 ---
 <!doctype html>
 <html lang="en">
@@ -35,7 +53,15 @@ const year = new Date().getFullYear(); // D36: build year
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
-    <meta name="description" content={description ?? site.description} />
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" href={favicon} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    {shareImageUrl && <meta property="og:image" content={shareImageUrl} />}
+    <meta name="twitter:card" content={shareImageUrl ? 'summary_large_image' : 'summary'} />
     <style set:html={themeCss(site.colors)}></style>
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>

@@ -46,6 +46,11 @@ export const DEFAULT_LABELS = {
   people: {
     empty: 'Coming soon.',
   },
+  notFound: {
+    title: 'Page not found',
+    text: "Sorry — that page doesn't exist. It may have moved, or the address may be mistyped.",
+    home: 'Go to the home page',
+  },
 };
 
 export type Labels = typeof DEFAULT_LABELS;
