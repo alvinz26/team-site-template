@@ -118,7 +118,11 @@ const shareImageUrl =
             </ul>
           </nav>
         </div>
-        <p class="copyright">© {year} {site.name}</p>
+        <p class="copyright">
+          © {year} {site.name} ·
+          {/* Author credit lives in code, not content, so it stays when the site's content is edited. */}
+          Website by <a href="https://github.com/alvinz26/team-site-template" target="_blank" rel="noopener noreferrer">Tao</a>
+        </p>
       </div>
     </footer>
 

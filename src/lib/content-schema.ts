@@ -48,6 +48,10 @@ export const siteSchema = <I extends ImageField>(img: I) =>
     founded: z.number().int().min(1800).max(2200).optional(),
     description: text,
     notice: text.optional(),
+    domain: z
+      .string()
+      .regex(/^(?!https?:)(?!.*\/)[a-z0-9-]+(\.[a-z0-9-]+)+$/i, 'must be just the address, e.g. www.durhamultimate.co.uk (no https:// and no /)')
+      .optional(),
     logo: img.optional(),
     colors: z.strictObject({ primary: hexColour, accent: hexColour }),
     email: z.email('must be an email address like hello@example.com').optional(),

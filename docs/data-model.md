@@ -53,6 +53,7 @@ content/
 | `founded` | 整数（年份） | — | 成立年份。使用 `auto: seasons` 统计项时必填 | `2004` |
 | `description` | 文本 | ✅ | 2–3 句简介。显示在首页，也会作为搜索引擎摘要 | 见示例文件 |
 | `notice` | 文本 | — | 全站通知横幅，显示在每一页顶部。不需要时删掉这一行（D33） | `Trials this Saturday — everyone welcome` |
+| `domain` | 网址（不带 https://） | — | 俱乐部买了自己的域名时填写，网站会从这个域名的根目录发布。还要在 GitHub 仓库的 Settings → Pages → Custom domain 填同一个域名（D56） | `www.durhamultimate.co.uk` |
 
 ### 1.2 品牌
 
