@@ -7,12 +7,12 @@
 
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(fileURLToPath(import.meta.url), '../../..');
 const ASTRO_BIN = path.join(ROOT, 'node_modules', 'astro', 'bin', 'astro.mjs');
+const WORK_ROOT = path.join(ROOT, '.test-work'); // git-ignored; emptied by `npm test` (pretest)
 
 /** Helpers handed to a test's `mutate` callback. Paths are relative to content/. */
 function makeContentApi(dir) {
@@ -39,7 +39,10 @@ function makeContentApi(dir) {
  * @returns {{ ok: boolean, output: string, dist: string, html: (page?: string) => string, files: () => string[] }}
  */
 export function buildSite({ mutate, env = {} } = {}) {
-  const work = fs.mkdtempSync(path.join(os.tmpdir(), 'team-site-test-'));
+  // Scratch space lives inside the project: Astro cannot move build output across drives
+  // (EXDEV on Windows) and cannot process images from content outside the project root.
+  fs.mkdirSync(WORK_ROOT, { recursive: true });
+  const work = fs.mkdtempSync(path.join(WORK_ROOT, 'build-'));
   const contentDir = path.join(work, 'content');
   const dist = path.join(work, 'dist');
   fs.cpSync(path.join(ROOT, 'content'), contentDir, { recursive: true });
