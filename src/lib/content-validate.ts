@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { LineCounter, parseDocument, isSeq, type Document } from 'yaml';
 import { z } from 'astro/zod';
-import { honourSchema, newsSchema, personSchema, seasonYear, siteSchema } from './content-schema';
+import { honourSchema, newsSchema, pageSchema, personSchema, seasonYear, siteSchema } from './content-schema';
 import { aliasMap, participants, similarNames } from './honours-logic';
 import { contrast } from './theme';
 
@@ -402,8 +402,11 @@ function loadPage(id: string, required: boolean, problems: Problem[]): MarkdownE
     if (required) problems.push({ file: rel(abs), message: 'file not found. This page needs the file (it can be short).' });
     return undefined;
   }
-  const { body } = splitFrontmatter(readText(abs));
+  const { frontmatter, body } = splitFrontmatter(readText(abs));
   checkBodyImages(abs, body, problems);
+  // These pages take no settings; any field between --- lines is a mistake, not silently ignored (D17).
+  const parsed = frontmatter.trim() ? parseYaml(abs, frontmatter, problems, 1) : undefined;
+  if (parsed) check(pageSchema, parsed.value ?? {}, { file: rel(abs) }, problems);
   return { id, file: abs, data: {}, body };
 }
 

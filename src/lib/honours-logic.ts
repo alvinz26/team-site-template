@@ -80,7 +80,7 @@ const normalise = (name: string) =>
     .normalize('NFD')
     .replace(/\p{M}/gu, '')
     .toLowerCase()
-    .replace(/[^a-z\s]/g, '')
+    .replace(/[^\p{L}\p{N}\s]/gu, '') // keep letters of every script (Chinese, Cyrillic…), drop punctuation
     .replace(/\s+/g, ' ')
     .trim();
 

@@ -1,8 +1,9 @@
 // The ONLY module pages use to read content (SPEC constraint 9).
 // To move content to an API or CMS later, change this file and content.config.ts — not the pages.
 
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { seasonYear } from './content-schema';
+import { loadContent } from './content-validate';
 import { leaderboard } from './honours-logic';
 import { mergeLabels } from './labels';
 
@@ -19,10 +20,20 @@ export async function getSite() {
 
 export type Site = Awaited<ReturnType<typeof getSite>>;
 
+/**
+ * getCollection without Astro's "collection does not exist or is empty" warning, which would
+ * otherwise fill the build log whenever people.yaml or news/ has no entries yet and bury the
+ * warnings that matter (contrast, duplicate names).
+ */
+async function entries<C extends 'people' | 'news' | 'honours'>(name: C): Promise<CollectionEntry<C>[]> {
+  if (loadContent()[name].length === 0) return [];
+  return getCollection(name);
+}
+
 /** People in the newest season, grouped in site.yaml order and sorted by `order`, then file order. */
 export async function getCurrentPeople() {
   const site = await getSite();
-  const people = (await getCollection('people')).map((e, i) => ({ ...e.data, index: i }));
+  const people = (await entries('people')).map((e, i) => ({ ...e.data, index: i }));
   const latest = Math.max(0, ...people.map((p) => seasonYear(p.season)));
   const current = people.filter((p) => seasonYear(p.season) === latest);
   const byOrder = (a: (typeof current)[number], b: (typeof current)[number]) =>
@@ -38,7 +49,7 @@ export type Person = Awaited<ReturnType<typeof getCurrentPeople>>[number]['peopl
 export async function getNews() {
   const site = await getSite();
   if (!site.modules.news) return [];
-  return (await getCollection('news')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  return (await entries('news')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
 export const getPage = (id: 'about' | 'join') => getEntry('pages', id);
@@ -51,7 +62,7 @@ export const getPage = (id: 'about' | 'join') => getEntry('pages', id);
 export async function getHonours() {
   const site = await getSite();
   if (!site.modules.honours) return [];
-  const all = (await getCollection('honours')).map((e) => e.data);
+  const all = (await entries('honours')).map((e) => e.data);
   return all.sort((a, b) => seasonYear(b.season) - seasonYear(a.season)); // stable: keeps file order
 }
 
@@ -75,7 +86,7 @@ export async function getLeaderboard() {
 export async function getStats() {
   const site = await getSite();
   const honours = await getHonours();
-  const people = (await getCollection('people')).map((e) => e.data);
+  const people = (await entries('people')).map((e) => e.data);
   const peopleLatest = Math.max(0, ...people.map((p) => seasonYear(p.season)));
   const latest = Math.max(peopleLatest, ...honours.map((h) => seasonYear(h.season)));
   const auto = {

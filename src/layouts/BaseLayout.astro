@@ -43,7 +43,8 @@ const favicon = site.logo
 
 // Share previews need absolute URLs, which exist only when the site address is known (GitHub builds).
 const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href : undefined);
-const pageUrl = absolute(Astro.url.pathname);
+// The 404 page has no address of its own, so its share link points to the home page.
+const pageUrl = absolute(/\/404\/?$/.test(Astro.url.pathname) ? url() : Astro.url.pathname);
 const shareImageUrl =
   shareImage && absolute((await getImage({ src: shareImage, width: 1200, format: formatFor(shareImage, 'jpg') })).src);
 ---

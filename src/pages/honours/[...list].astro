@@ -59,9 +59,9 @@ const title = labels.nav.honours;
             {labels.honours.noMatch}
           </p>
 
-          {seasons.map((s) => (
-            <section class="season" data-season={s.season} aria-labelledby={`season-${s.season.replace(/\W+/g, '-')}`}>
-              <h2 id={`season-${s.season.replace(/\W+/g, '-')}`}>{s.season}</h2>
+          {seasons.map((s, i) => (
+            <section class="season" data-season={s.season} aria-labelledby={`season-${i}`}>
+              <h2 id={`season-${i}`}>{s.season}</h2>
               <div class="grid">
                 {s.honours.map((h) => (
                   <HonourCard honour={h} site={site} />
@@ -73,7 +73,7 @@ const title = labels.nav.honours;
           {board.length > 0 && (
             <section class="section" aria-labelledby="leaderboard-title">
               <h2 id="leaderboard-title">{labels.honours.leaderboardTitle}</h2>
-              <div class="table-scroll">
+              <div class="table-scroll" tabindex="0" role="region" aria-labelledby="leaderboard-title">
                 <table class="leaderboard" data-leaderboard>
                   <thead>
                     <tr>
